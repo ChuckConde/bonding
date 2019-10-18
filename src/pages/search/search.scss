@@ -1,0 +1,178 @@
+page-search {
+	.container {
+		max-width: 1200px;
+		box-sizing: border-box;
+		margin: 0 auto;
+
+		.search-controls {
+			padding: 0 0 10px 0;
+			position: relative;
+			display: flex;
+			align-items: center;
+
+			&::after {
+				content: '';
+				background-color: color($colors, bondingPrimary);
+				height: 2px;
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+
+			.filter-container {
+				max-width: 125px; 
+				flex-grow: 1;
+				text-align: center;
+
+				button {
+					color: color($colors, bondingPrimary);
+					background: transparent!important;
+					box-shadow: none!important;
+	
+					.label {
+						margin: 0 0 0 10px;
+						font-size: 16px;
+					}
+				}
+			}
+
+			.chip-container {
+				display: flex;
+				flex-wrap: wrap;
+				flex-grow: 1;
+				
+				.chip {
+					background-color: #f9f9f9;
+					border-radius: 15px;
+					padding: 5px 10px;
+					margin: 5px 10px;
+				}
+			}
+		}
+
+		.items {
+			max-width: 500px;
+			margin: 20px auto;
+
+			ion-card {
+				width: 100%;
+				margin: 0 0 40px 0;
+				padding: 0;
+				background-color: #f9f9f9;
+				padding: 20px 10px;
+				border-radius: 4px;
+				box-shadow: 0px 2px 5px -4px color($colors, bondingPrimary);
+
+				ion-card-header {
+					padding: 0;
+
+					ion-card-title {
+						margin: 0;
+						padding: 0;
+						
+						ion-avatar {
+							padding: 0;
+							margin: 0;
+							display: flex;
+							align-items: center;
+
+							.image {
+								display: flex;
+								height: 50px;
+                width: 50px;
+								background-position: center;
+								background-size: cover;
+                border-radius: 100%;
+							}
+
+							.info {
+								padding: 0 20px;
+                width: calc(100% - 50px);
+                display: flex;
+								flex-direction: column;
+								align-items: flex-start;
+								justify-content: flex-start;
+
+								.name {
+									font-size: 18px;
+									font-weight: 500;
+									margin: 0;
+                  width: 100%;
+                  display: inline-block;
+                  overflow: hidden;
+                  text-transform: uppercase;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+								}
+
+								ion-chip { 
+									height: 24px;
+									line-height: 24px;
+									margin: 5px 0 0 0; 
+									align-self: inherit;
+								}
+							}
+						}
+					}
+				}
+
+				ion-card-content {
+					padding: 0;
+					margin: 0;
+
+					.data-wrapper {
+						margin: 30px 0;
+
+						.data-group {
+							margin: 0 0 10px 0;
+							h2 { margin: 0; }
+						}
+					}
+
+					.action-wrapper {
+						.outline {
+							background-color: transparent !important;
+							color: color($colors, bondingPrimary);
+							border: 2px solid color($colors, bondingPrimary);
+						}
+					}
+				}
+			}
+		}
+
+		&.secondary {
+			.search-controls {
+				&::after {
+					background-color: color($colors, bondingSecondary);
+				}
+
+				button {
+					color: color($colors, bondingSecondary);
+				}
+			}
+
+			.items {
+				ion-card {
+					box-shadow: 0px 2px 5px -4px color($colors, bondingSecondary);
+					
+					ion-card-content {
+						.action-wrapper {
+							.outline {
+								background-color: transparent !important;
+								color: color($colors, bondingSecondary);
+								border: 2px solid color($colors, bondingSecondary);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.empty-list {
+		margin: 25px 0 0 0;
+		text-align: center;
+	}
+}

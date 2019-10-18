@@ -1,0 +1,304 @@
+proposal-form {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    &.header {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      padding: 10px 20px;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #DEDEDE;
+
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #999999;
+
+        ion-icon {
+          font-size: 25px;
+        }
+
+        span {
+          font-size: 13px;
+          font-weight: 300;
+          margin: 3px 0 0 0;
+          text-align: center;
+        }
+
+        &.active {
+          color: color($colors, bondingPrimary);
+        }
+
+        @media(min-width: 576px) {
+          // & {
+          //   padding: 0 50px;
+          // }
+        }
+      }
+    }
+
+    &.content {
+      overflow: auto;
+      flex-grow: 1;
+      
+      form {
+        max-width: 600px;
+        padding: 20px;
+        margin: 0 auto;
+        box-sizing: border-box;
+
+        &.order-form {
+          text-align: center;
+
+          // .file-title {
+          //   color: color($colors, bondingPrimary);
+          // }
+
+          // .files-container {
+          //   display: flex;
+          //   justify-content: center;
+
+          //   .file {
+          //     width: 75px;
+          //     height: 75px;
+          //     border-radius: 50%;
+          //     margin: 0 0 20px 0;
+          //     display: flex;
+          //     align-items: center;
+          //     justify-content: center;
+        
+          //     ion-icon {
+          //       font-size: 40px;
+          //       opacity: 0.3;
+          //     }
+        
+          //     &:hover {
+          //       ion-icon {
+          //         opacity: 0.7;
+          //       }
+          //     }
+          //   }
+          // }
+        }
+      }
+
+      ion-row {
+        justify-content: space-between;
+
+        ion-item {
+          width: 48%;
+        }
+
+        &.product-row {
+          position: relative;
+
+          ion-item {
+            &:nth-child(1) {
+              width: 64%;
+            }
+
+            &:nth-child(2) {
+              width: 31%;
+            }
+          }
+        }
+
+        &.date-row {
+          position: relative;
+        }
+
+        .error {
+          margin: 0;
+          padding: 0;
+          color: #cc0000 !important;
+          font-size: 1.2rem;
+          position: absolute;
+          bottom: 0;
+        }
+      }
+
+      ion-item {
+        position: relative;
+    
+        .item-inner {
+          padding-bottom: 20px;
+    
+          .error {
+            margin: 0;
+            padding: 0;
+            color: #cc0000 !important;
+            font-size: 1.2rem;
+            position: absolute;
+            bottom: 0px;
+          }
+        }
+    
+        &.ion-select {
+          .input-wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+            
+            ion-label:not(.error) {
+              transform: scale(0.9);
+              transform-origin: 0;
+              margin-bottom: 0;
+            }
+            
+            ion-select {
+              width: 100%;
+              max-width: 100%;
+            }
+          }
+        }
+    
+        &.item-ionic-selectable {
+          &:not(.item-input-has-value) {
+            .input-wrapper {
+              ion-label:not(.error) {
+                transform: translate3d(10px, 29px, 0);
+                color: #4F5558;
+              }  
+            }
+          }
+
+          &.item-input-disabled {
+            .input-wrapper {
+              ion-label:not(.error) {
+                color: #dedede;
+              }
+            }
+          }
+
+          .input-wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+            
+            ion-label:not(.error) {
+              transform: scale(0.9);
+              transform-origin: 0;
+              margin-bottom: 0;
+            }
+    
+            ionic-selectable {
+              width: 100%;
+              max-width: 100%;
+              border: 1px solid #dedede;
+              padding: 0 10px;
+              border-radius: 6px;
+    
+              .ionic-selectable-value {
+                padding-left: 0 !important;
+                padding-top: 8px !important;
+                padding-right: 8px !important;
+                height: 36px;
+              }
+            }
+          }
+        }
+    
+        &.item-datetime {
+          .input-wrapper {
+            ion-datetime {
+              border: 1px solid #dedede;
+              height: 38px;
+              padding: 8px 10px;
+              border-radius: 6px;
+            }
+          }
+        }
+
+        ion-textarea {
+          textarea {
+            resize: none;
+            margin: 0 0 20px 0;
+            width: 100%;
+            height: 75px;
+          }
+        }
+      }
+
+      .products {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+
+        h4 {
+          margin: 0 0 15px 0;
+        }
+
+        .products-list {
+          .product {
+            background-color: #fcdcd6;
+            padding: 10px;
+            margin: 0 0 10px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .product-info {
+              padding: 0 10px 0 0;
+
+              p {
+                margin: 0 0 5px 0;
+
+                &.name {
+                  font-weight: 600 !important;
+                  font-size: 15px;
+                }
+
+                &.amount, 
+                &.notes {
+                  font-size: 13px;
+
+                  span {
+                    font-weight: 600;
+                    color: #666;
+                  }
+                }
+
+                &:last-child {
+                  margin: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .no-products {
+          font-size: 13px;
+          color: #999;
+        }
+      }
+    }
+
+    &.footer {
+      background-color: #FFFFFF;
+      border-top: 1px solid #DEDEDE;
+
+      .action-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 0;
+    
+        button {
+          width: 160px;
+          margin: 0;
+    
+          &.outline {
+            margin: 0 15px 0 0;
+            background-color: transparent !important;
+            color: color($colors, bondingPrimary);
+            border: 2px solid color($colors, bondingPrimary);
+          }
+        }
+      }
+    }
+  }
+}

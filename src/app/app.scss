@@ -1,0 +1,160 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+@import '../theme/side-menu.scss';
+@import '../theme/ion-content.scss';
+@import '../theme/custom-form.scss';
+@import '../theme/tab-menu.scss';
+@import '../theme/password.scss';
+@import '../theme/toolbar.scss';
+@import '../theme/role-customization.scss';
+
+h1,
+h2{
+    font-weight: 500 !important;
+}
+h3,
+h4,
+h5,
+p {
+  font-weight: 400 !important;
+}
+
+.toolbar-title-md,
+.toolbar-title-ios {
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.toolbar{
+  ion-buttons{
+    button{
+      .icon{
+        font-size: 3rem;
+        margin-right:5px;
+      }
+    }
+   
+  }
+}
+@media(min-width:768px) {
+	ion-nav.inner-page {
+		transform: translate(0)!important;
+		margin: 0 0 0 $menu-width!important;
+		// width: calc( 100% - $menu-width)!important;
+		width: calc( 100% - 200px )!important;
+	}
+	[menuToggle] {
+		display: none;
+	}
+}
+
+.action-sheet-group {
+	overflow: auto;
+}
+
+/** Fix for browser */
+.cordova-camera-capture {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100vh;
+  width: 100%;
+  padding: 100px 0 0 0;
+  box-sizing: border-box;
+  text-align: center;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 370px;
+    height: 340px;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    top: 80px;
+  }
+
+  video {
+    margin: 0 auto;
+    width: 340px!important;
+    height: 255px!important;
+    position: relative;
+    z-index: 2;
+  }
+
+  button {
+    display: block;
+    width: 340px;
+    margin: 0 auto;
+    font-weight: 500;
+    font-size: 1.4rem;
+    font-family: "Quicksand", sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #f15232;
+    padding: 15px 0;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.cordova-camera-select {
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: fixed!important;
+  top: -100vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 360px;
+    margin: 0 auto;
+    background-color: #fff;
+    position: fixed;
+    top: 90px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    height: 68px;
+  }
+
+  &::after {
+    content: 'Selecciona un archivo';
+    display: block;
+    width: 340px;
+    margin: 0 auto;
+    font-weight: 500;
+    font-size: 1.4rem;
+    font-family: "Quicksand", sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #f15232;
+    padding: 15px 0;
+    text-align: center;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+  }
+}

@@ -1,0 +1,44 @@
+image-slider {
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    position: relative;
+    &>.loader {
+      display: flex;
+      height: 5px;
+      position: absolute;
+      width: 100%;
+      bottom:0;
+      &>.loader-item {
+        flex: 1;
+        z-index: 10;
+        background: rgba(color($colors, stable), 0.8);
+        &.active {
+          background: color($colors, primary);
+        }
+      }
+    }
+    &>.image {
+      display: flex;
+      flex: 1;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      &>.left,
+      &>.right {
+        display: flex;
+        width: 10%;
+        height: 100%;
+        background: rgba(color($colors, dark), 0.4);
+        justify-content: center;
+        align-items: center;
+        simple-line-icon {
+          color: color($colors, light);
+        }
+      }
+    }
+   
+  }
+  

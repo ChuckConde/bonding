@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Vinculaciones Activas</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="container">
+    <contact-list *ngIf="!loadingFlag"
+      [links]="links" 
+      [settings]="{
+        isAgent: isAgent,
+        noDataText: 'No tienes ninguna vinculación en tu lista.',
+        dateLabel: 'Vinculados desde el',
+        dateKey: 'created_at'
+      }" 
+      (event)="openOptions($event)">
+    </contact-list>
+  </div>
+</ion-content>

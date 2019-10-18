@@ -1,0 +1,209 @@
+page-profile {
+  .avatar-container {
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		padding: 20px 0;
+		background-color: #dddddd;
+
+		h2 {
+			color: color($colors, bondingPrimary);
+
+			&.secondary {
+				color: color($colors, bondingSecondary);
+			}
+		}
+
+    .image {
+			display: flex;
+			height: 100px;
+			width: 100px;
+			background-position: center;
+			background-size: cover;
+			border-radius: 100%;
+		}
+  }
+
+
+  ion-content {
+    @include content-styles('', hidden, auto);
+  }
+  .container {
+		max-width: 1200px;
+		box-sizing: border-box;
+		margin: 0 auto;
+		padding: 0 15px;
+
+    &.profile {
+      margin: 50px auto; 
+
+			ul { 
+				margin: 0; 
+				padding: 0; 
+			}
+			
+			.item {
+        list-style-type: none;
+				margin: 40px 0 0 0;
+
+				&:first-child {
+					margin-top: 0;
+				}
+
+				h4 {
+          color: color($colors, bondingPrimary);
+					font-weight: 500 !important;
+				}
+
+				ul {
+					list-style: disc;
+					padding: 0 0 0 25px;
+				}
+
+				&.locations {
+					ul {
+						padding: 0;
+						list-style: none;
+					}
+				}
+			}
+			
+			&.secondary {
+				.item {
+					h4 {
+						color: color($colors, bondingSecondary);
+					}
+				}
+			}
+		}
+			
+      .image {
+        @include box-shadow(3);
+        background-color: color($colors, light);
+        background-size: 80px;
+        width: 90px;
+        height: 90px;
+        border-radius: 16px;
+        z-index: 2;
+      }
+		
+    .body {
+      display: flex;
+      flex-direction: column;
+      margin: -25px 20px 20px;
+      border-radius: 14px;
+      background-color: color($colors, light); //   margin: 20px;
+      width: calc(100% - 40px);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      .content {
+        position: relative;
+        margin: 60px 0 10px 0;
+        padding:0 20px;
+        text-align: center;
+        .title {
+          display: flex;
+          justify-content: center;
+					font-size: 2em;
+					font-weight: 500;
+					margin: 0 0 0.5em 0;
+					.config {
+						position: relative;
+						left: 10px;
+						top: 1px;
+						font-size: 0.9em;
+					}
+        }
+        .subtitle {
+          display: flex;
+          justify-content: center;
+          font-size: 1.4rem;
+          font-weight: 400;
+        }
+        .menu {
+          border-radius: 4px;
+          display: flex;
+          justify-content: space-between;
+          border: 1px solid darken(color($colors, primary), 8);
+          width: 100%;
+          margin: 15px 0 10px;
+          padding: 10px;
+          font-size: 1.6rem;
+          text-transform: capitalize;
+          .menu-item {
+            padding: 0 10px;
+            text-align: center;
+            transition: all ease-in-out .5s;
+            &.active {
+              font-weight: 500 !important;
+              color: color($colors, primary);
+              p {
+                font-weight: 500 !important;
+              }
+            }
+            p {
+              margin: 0px;
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+      .sub-content {
+        display: flex;
+        flex: 1;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: flex;
+        height: 100%;
+        width: calc(100% - 40px);
+        margin: 0 20px 20px;
+        @include box-shadow(1);
+        // background-color: darken(color($colors, light), 2);
+        border-radius: 4px;
+      }
+      &>.button{
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        align-self: center;
+      }
+		}
+		
+		.news {
+			.item {
+				background-color: #ffffff;
+				margin: 20px 0 0 0;
+				padding: 5px;
+				border-radius: 5px;
+
+				a {
+					text-decoration: none;
+
+					.header {
+						background-position: center;
+						background-size: cover;
+						background-repeat: no-repeat;
+
+						h5 {
+							margin: 0;
+							text-decoration: none;
+							padding: 100px 0 10px 0;
+							color: #2d2d2d;
+							font-weight: 500!important;
+							background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.8));
+						}
+					}
+
+					.content {
+						text-align: left;
+						margin: 15px 0;
+					}
+				}
+			}
+		}
+  }
+}
+

@@ -1,0 +1,250 @@
+<div class="actions">
+  <div *ngIf="conversation.state === 'CREATED'" class="container">
+    <button ion-button 
+      (click)="cancelProposal()"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Cancelar propuesta
+    </button>
+
+    <button *ngIf="!isAgent"
+      ion-button 
+      (click)="sendInvoice()"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Agregar recibo
+    </button>
+  </div>
+
+  <div *ngIf="conversation.state === 'PENDING_ACCEPT' && isAgent" class="container">
+    <button ion-button 
+      (click)="rejectInvoice()"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Rechazar recibo
+    </button>
+
+    <button ion-button 
+      (click)="acceptProposal()"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Aceptar propuesta
+    </button>
+  </div>
+</div>
+
+<div class="content" #chatContent>
+  <div *ngIf="messages.length; then msgTemplate else noMsgTemplate"></div>
+</div>
+
+<div class="footer" [ngClass]="{'secondary': !isAgent}">
+  <div *ngIf="!conversation.is_archived && !conversation.is_deleted && conversation.state !== 'COMMISSION_PAID'" class="container">
+    <div class="message-wrapper">
+      <textarea [formControl]="messageControl"
+        [ngStyle]="{'height': textareaHeight + 'px'}"
+        #textareaRef
+        placeholder="Escribe un mensaje..."
+        (keydown)="onKeydown($event, textareaRef)">
+      </textarea>
+    </div>
+
+    <button class="send-button" 
+      [disabled]="!messageControl.value"
+      (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+      <span>Enviar</span>
+    </button>
+  </div>
+
+  <p *ngIf="conversation.is_archived || conversation.is_deleted" class="proposal-finalized">
+    La propuesta ya está finalizada, no se pueden enviar más mensajes.
+  </p>
+
+  <p *ngIf="conversation.state === 'COMMISSION_PAID'" class="proposal-finalized">
+    <ng-container *ngIf="!calificationSended">
+      La comisión ya fue abonada. Debes calificar al otro usuario para finalizar la propuesta.
+    </ng-container>
+    <ng-container *ngIf="calificationSended">
+      ¡Sólo resta que el otro usuario te califique para finalizar la propuesta!
+    </ng-container>
+  </p>
+</div>
+
+<ng-template #noMsgTemplate>
+  <p class="no-messages">No hay mensajes.</p>
+</ng-template>
+  
+<ng-template #msgTemplate>
+  <div *ngFor="let message of messages; let i = index" 
+    class="message"
+    [ngClass]="{
+      'owner': message.createdBy === me.accountId,
+      'system-message': message.createdBy === -1,
+      'secondary': isAgent
+    }"
+    (click)="message.info = !message.info">
+    <div class="content">
+      <div class="message-wrapper">
+        <p *ngIf="!message.is_media && message.createdBy !== -1">
+          {{ message.text }}
+        </p>
+  
+        <span class="date" *ngIf="message.info && message.createdBy !== -1">
+          {{
+            message.createdBy !== me.accountId ?
+            'Enviado el ' + (message.created_at | date: 'dd/MM/yyyy') :
+            message.read_at?
+              'Leído el ' + (message.read_at | date: 'dd/MM/yyyy') :
+              'Enviado el ' + (message.created_at | date: 'dd/MM/yyyy')
+          }}
+        </span>
+
+        <p *ngIf="message.createdBy === -1">
+          <ng-container *ngIf="message.text === 'PENDING_ACCEPT_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Tu recibo fue enviado.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ conversation.company.contact.othernames }} envió un recibo. Chequealo para que empiezen a preparar tu pedido.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'FINALIZED_MSG'">
+            La propuesta fue finalizada el {{ conversation.updated_at | date: 'dd/MM/yyyy' }}.
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'REJECT_INVOICE_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Rechazaste el recibo enviado por la empresa.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              El recibo que enviaste fue rechazado.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'ACCEPTED_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Aceptaste el recibo. ¡{{ conversation.company.contact.othernames }} comenzará a preparar tu pedido!
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              ¡El recibo fue aceptado!. Comenzá a preparar tu pedido.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'PENDING_DELIVERED_APROVAL_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Indicaste que el pedido fue entregado.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} indicó que el pedido fue entregado. Chequealo para avanzar con la propuesta.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'DELIVERED_APROVAL_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Confirmaste que el pedido fue entregado.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} confirmó que le pedido fue entregado.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'REJECT_DELIVERED_MARK_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Rechazaste la confirmación de entrega.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} rechazó la confirmación de entrega.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'PENDING_PAYMENT_APROVAL_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Indicaste que el pedido fue cobrado.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} indicó que el pedido fue cobrado. Chequealo para avanzar con la propuesta.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'PAYMENT_APROVAL_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Confirmaste que el pedido fue cobrado.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} confirmó que le pedido fue cobrado.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'REJECT_PAYMENT_APROVAL_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Rechazaste la confirmación de cobro.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} rechazó la confirmación de cobro.
+            </ng-container>
+          </ng-container>
+          
+          <ng-container *ngIf="message.text === 'PENDING_COMMISSION_PAID_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Indicaste que la comisión fue abonada.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} indicó que la comisión de la propuesta fue abonada. Chequealo para avanzar al próximo paso.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'REJECT_COMMISSION_PAID_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Rechazaste la confirmación de cobro de comisión.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} rechazó la confirmación de cobro de comisión.
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="message.text === 'COMMISSION_PAID_MSG'">
+            <ng-container *ngIf="message.accountId === me.accountId">
+              Confirmaste que la comisión fue abonada.
+            </ng-container>
+            <ng-container *ngIf="message.accountId !== me.accountId">
+              {{ 
+                message.accountId === conversation.agentId ?
+                (conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname) :
+                conversation.company.contact.othernames
+              }} confirmó que la comisión fue abonada.
+            </ng-container>
+          </ng-container>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

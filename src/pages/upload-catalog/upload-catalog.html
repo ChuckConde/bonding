@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ catalog ? 'Actualizar catalogo' : 'Subir catalogo' }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="file-wrapper" (click)="openExplorer()">
+    <div class="button">
+      <ion-icon name="ios-document-outline"></ion-icon>
+      <span>Seleccionar archivo</span>
+    </div>
+
+    <div *ngIf="file" class="file-name">
+      {{ file.name }}
+    </div>
+  </div>
+
+  <input #inputFile type="file" name="file" (change)="fileChange($event)">
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button class="outline" (click)="close()">
+      Cancelar
+    </button>
+
+    <button ion-button color="bondingSecondary" (click)="save()"
+      [disabled]="!(this.file && !this.maxFileSize)">
+      Guardar
+    </button>
+  </div>
+</ion-footer>

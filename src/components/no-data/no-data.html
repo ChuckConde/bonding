@@ -1,0 +1,11 @@
+<img class="image" src="assets/imgs/general/empty-box.png">
+
+<p>{{ options?.text }}</p>
+
+<ion-row *ngIf="button">
+  <ion-col text-center>
+    <button ion-button [color]="button.color" (click)="onClick()">
+      {{ button.text }}
+    </button>
+  </ion-col>
+</ion-row>

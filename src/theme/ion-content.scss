@@ -1,0 +1,8 @@
+
+@mixin content-styles($background, $scroll-x, $scroll-y) {
+  background-color: $background !important;
+  .scroll-content {
+    overflow-x: $scroll-x;
+    overflow-y: $scroll-y;
+  }
+}

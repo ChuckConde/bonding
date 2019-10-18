@@ -1,0 +1,326 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+		<ion-title>Editar mi Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="container" [ngClass]="{'secondary': !isAgent}">
+    <form class="body custom-form" [formGroup]="form">
+      <h4>Foto de Perfil</h4>
+      <div class="picture">
+        <div class="image" [image-loader]="form.value.picture" tappable (click)="changePicture()">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+      </div>
+  
+      <h4>Datos personales y de contacto.</h4>
+      <ng-container *ngIf="isAgent">
+        <ion-item>
+          <ion-label floating>Nombre</ion-label>
+          <ion-input type="text" formControlName="firstname"></ion-input>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.firstname.touched || saveRequest) &&
+              !form.controls.firstname.valid
+              ">
+              Debes completar tu nombre.
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Apellido</ion-label>
+          <ion-input type="text" formControlName="lastname"></ion-input>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.lastname.touched || saveRequest) &&
+              !form.controls.lastname.valid
+            ">
+            Debes completar tu apellido.
+          </ion-label>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="!isAgent">
+        <ion-item>
+          <ion-label floating>Razón social</ion-label>
+          <ion-input type="text" formControlName="othernames"></ion-input>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.othernames.touched || saveRequest) &&
+              !form.controls.othernames.valid
+              ">
+              Debes completar la razón social.
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Descripción</ion-label>
+          <ion-textarea formControlName="description"></ion-textarea>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.description.touched || saveRequest) &&
+              !form.controls.description.valid
+            ">
+            Debes completar una descripción, de entre 30 y 200 caracteres.
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="!isAgent">
+          <ion-label floating>Comisión</ion-label>
+          <ion-input type="number" formControlName="comission"></ion-input>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.comission.touched || saveRequest) &&
+              !form.controls.comission.valid
+              ">
+              Debes completar la comisión.
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="!isAgent">
+          <ion-label floating>Descripción de la comisión</ion-label>
+          <ion-textarea formControlName="comissionDescription"></ion-textarea>
+          <ion-label class="error"
+            *ngIf="
+              (form.controls.comissionDescription.touched || saveRequest) &&
+              !form.controls.comissionDescription.valid
+            ">
+            La descripción puede tener como máximo 200 caracteres.
+          </ion-label>
+        </ion-item>
+      </ng-container>
+
+      <ion-item>
+        <ion-label floating>{{ isAgent? 'Fecha de nacimiento' : 'Inicio de actividades' }}</ion-label>
+        <ion-datetime [max]="maxDate"
+          displayFormat="DD MMM, YYYY" 
+          formControlName="dateOfBirth"
+          doneText="Confirmar"
+          cancelText="Cancelar">
+        </ion-datetime>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.dateOfBirth.touched || saveRequest) &&
+            !form.controls.dateOfBirth.valid
+          ">
+          Debes ingresar una fecha válida
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Teléfono</ion-label>
+        <ion-input type="number" formControlName="phone"></ion-input>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.phone.touched || saveRequest) &&
+            !form.controls.phone.valid
+            ">
+            Debes completar un teléfono válido.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+
+      <h4>Ubicación y preferencias de negocio</h4>
+
+      <p>{{ isAgent? 'Residencia' : 'Ubicación' }}</p>
+      <ion-item>
+        <ion-label floating>País</ion-label>
+        <ion-input type="text" formControlName="country"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Provincia</ion-label>
+        <ionic-selectable item-content
+          formControlName="province"
+          itemValueField="value"
+          itemTextField="label"
+          searchPlaceholder="Buscar..."
+          searchFailText="No hay resultados"
+          [canSearch]="true"
+          [items]="provinces"
+          (onSearch)="onSearch($event, 'province')"
+          (onChange)="onChange($event, 'province')">
+        </ionic-selectable>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.province.touched || saveRequest) &&
+            !form.controls.province.valid
+          ">
+          Debes ingresar una provincia.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Ciudad</ion-label>
+        <ionic-selectable 
+          item-content
+          formControlName="city"
+          itemValueField="value"
+          itemTextField="label"
+          searchPlaceholder="Buscar..."
+          searchFailText="No hay resultados"
+          [canSearch]="true"
+          [items]="cities"
+          [hasVirtualScroll]="true"
+          (onSearch)="onSearch($event, 'city')">
+        </ionic-selectable>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.city.touched || saveRequest) &&
+            !form.controls.city.valid
+          ">
+          Debes ingresar una ciudad.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Código postal</ion-label>
+        <ion-input type="text" formControlName="postalCode"></ion-input>
+      </ion-item>
+      
+      <p>Preferencias profesionales</p>
+      <ion-item *ngIf="isAgent">
+        <ion-label floating>Nivel de experiencia</ion-label>
+        <ion-select
+          formControlName="experience"
+          placeholder="Selecciona una opción."
+          okText="Confirmar"
+					cancelText="Cancelar">
+          <ion-option value="true">
+            Tengo experiencia en ventas
+          </ion-option>
+          <ion-option value="false">
+            Mis primeras ventas
+          </ion-option>
+        </ion-select>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.experience.touched || saveRequest) &&
+            !form.controls.experience.valid
+          ">
+          Debes indicar tu nivel de experiencia.
+        </ion-label>
+      </ion-item>
+      
+      <ion-item *ngIf="isAgent">
+        <ion-label floating>
+          Rubros
+        </ion-label>
+        <ion-select 
+          [multiple]="true"
+          formControlName="segment"
+          okText="Continuar"
+          cancelText="Cancelar" 
+          placeholder="Seleccioná uno o más rubros, 8 máximo">
+                    
+          <ion-option  *ngFor="let option of segments" [value]="option.value">
+            {{ option.label }}
+          </ion-option> 
+        </ion-select>
+        <ion-label class="error"
+          *ngIf="(form.controls.segment.touched || saveRequest) && !form.controls.segment.valid">
+          Indica al menos un Rubro o Segmento y hasta máximo ocho.
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="isAgent && form.controls.experience.value" class="ion-select">
+        <ion-label>Volumen de compra de mis clientes</ion-label>
+        <ion-select [multiple]="true"
+          okText="Confirmar"
+          cancelText="Cancelar" 
+          formControlName="purchaseVolume" 
+          placeholder="Seleccione una o más opciones">
+          <ion-option *ngFor="let option of purchaseVolume" 
+            [value]="option.value">
+            {{ option.label }}
+          </ion-option> 
+        </ion-select>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.purchaseVolume.touched || saveRequest) &&
+            !form.controls.purchaseVolume.valid
+          ">
+          Indica el volumen de compra de tus clientes.
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="isAgent && form.controls.experience.value" class="ion-select">
+        <ion-label>Años de experiencia</ion-label>
+        <ion-select [multiple]="false"
+          okText="Confirmar"
+          cancelText="Cancelar" 
+          formControlName="yearsOfExperience" 
+          placeholder="Seleccione una opcion">
+          <ion-option *ngFor="let option of yearsOfExperience" 
+            [value]="option.value">
+            {{ option.label }}
+          </ion-option> 
+        </ion-select>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.yearsOfExperience.touched || saveRequest) &&
+            !form.controls.yearsOfExperience.valid
+          ">
+          Indica tus años de experiencia.
+        </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="isAgent && form.controls.experience.value">
+        <ion-label floating>Trabajo actualmente para:</ion-label>
+        <ion-input type="text" formControlName="companyOfWork"></ion-input>
+      </ion-item>
+
+      <ion-item class="ion-select">
+        <ion-label>Movilidad propia</ion-label>
+        <ion-select
+          formControlName="ownMobility"
+          placeholder="Selecciona una opción."
+          okText="Confirmar"
+          cancelText="Cancelar">
+          <ion-option value="true">
+            Dispongo de movilidad propia
+          </ion-option>
+          <ion-option value="false">
+            No dispongo de movilidad propia
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Descripción sobre movilidad propia</ion-label>
+        <ion-textarea formControlName="ownMobilityDescription"></ion-textarea>
+        <ion-label class="error"
+          *ngIf="
+            (form.controls.ownMobilityDescription.touched || saveRequest) &&
+            !form.controls.ownMobilityDescription.valid
+          ">
+          La descripción debe ser como máximo de 200 caracteres.
+        </ion-label>
+      </ion-item>
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button
+      class="outline" 
+      (click)="close()" 
+      [ngClass]="{'secondary': !isAgent}">
+      Cancelar
+    </button>
+
+    <button ion-button 
+      (click)="save()" 
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Guardar
+    </button>
+  </div>
+</ion-footer>

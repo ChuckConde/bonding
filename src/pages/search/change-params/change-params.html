@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Preferencias</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<div class="container">
+		<ng-container *ngIf="!isAgent && form">
+			<form class="body custom-form" [formGroup]="form">
+				<ion-item>
+					<ion-label floating>
+						Buscar por Nombre
+					</ion-label>
+					<ion-input type="text" formControlName="keyword"></ion-input>
+				</ion-item>
+        
+        <ion-item>
+					<ion-label floating>
+            Buscar por Clientes
+          </ion-label>
+					<ion-input type="text" formControlName="description"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label floating>
+						Buscar por rubro
+					</ion-label>
+					<ion-select multiple="true"
+						okText="Continuar"
+						cancelText="Cancelar" 
+						formControlName="segment" 
+						placeholder="">
+						<ion-option  *ngFor="let segment of segments" value="{{segment.value}}">
+							{{segment.label}}
+						</ion-option> 
+					</ion-select>
+				</ion-item>	
+				
+				<ion-item>
+					<ion-label floating>
+						Buscar por tipo de ventas
+					</ion-label>
+					<ion-select multiple="true"
+						okText="Continuar"
+						cancelText="Cancelar" 
+						formControlName="purchaseVolume" 
+						placeholder="">
+						<ion-option  *ngFor="let option of pucharseVolumeOptions" value="{{option.value}}">
+							{{option.label}}
+						</ion-option> 
+					</ion-select>
+				</ion-item>
+						
+				<ion-item>
+					<ion-label floating>
+						Buscar por nivel de experiencia
+					</ion-label>
+					
+					<ion-select multiple="true"
+						okText="Continuar"
+						cancelText="Cancelar" 
+						formControlName="experience" 
+						placeholder="">
+						<ion-option value="true">
+							Con Experiencia
+						</ion-option>
+						<ion-option value="false">
+							Sin Experiencia
+						</ion-option>
+					</ion-select>
+				</ion-item>
+
+				<ion-row class="age-range">
+					<ion-label>
+						Buscar por edad
+					</ion-label>
+					
+					<div class="row">
+						<ion-item>
+							<ion-input type="number" formControlName="ageFrom" placeholder="Desde">
+							</ion-input>
+						</ion-item>
+						
+						<ion-item>
+							<ion-input type="number" formControlName="ageTo" placeholder="Hasta">
+							</ion-input>
+						</ion-item>
+					</div>
+				</ion-row>
+				
+				<ion-item *ngIf="provinces.length">
+					<ion-label>
+						Provincia
+					</ion-label>
+					<ionic-selectable
+						item-content
+						formControlName="province"
+						itemValueField="value"
+						itemTextField="label"
+						searchPlaceholder="Buscar..."
+						searchFailText="No hay resultados"
+						[canSearch]="true"
+						[items]="provinces"
+						(onSearch)="onSearch($event, 'province')"
+						(onChange)="onChange()">
+					</ionic-selectable>
+				</ion-item>
+							
+				<ion-item *ngIf="cities.length">
+					<ion-label>
+						Ciudad
+					</ion-label>
+				<ionic-selectable 
+          item-content
+          formControlName="city"
+          itemValueField="value"
+          itemTextField="label"
+          searchPlaceholder="Buscar..."
+          searchFailText="No hay resultados"
+          [canSearch]="true"
+          [items]="cities"
+          [hasVirtualScroll]="true"
+          (onSearch)="onSearch($event, 'city')">
+        </ionic-selectable>
+				</ion-item>
+			</form>
+		</ng-container>
+
+		<ng-container *ngIf="isAgent && form">
+			<form class="body custom-form" [formGroup]="form">
+				<ion-item>
+					<ion-label floating>
+            Buscar por Nombre / Razón social
+          </ion-label>
+					<ion-input type="text" formControlName="othernames"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label floating>
+            Buscar por Descripcion
+          </ion-label>
+					<ion-input type="text" formControlName="description"></ion-input>
+				</ion-item>
+			</form>
+		</ng-container>
+
+		<p class="form-error" *ngIf="formError">
+			{{ formError }}
+		</p>
+	</div>
+</ion-content>
+
+<ion-footer>
+	<div class="action-wrapper">
+    <button ion-button
+      class="outline" 
+      (click)="clear()" 
+      [ngClass]="{'secondary': !isAgent}">
+      Limpiar
+    </button>
+
+    <button ion-button 
+      (click)="save()" 
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Buscar
+    </button>
+  </div>
+</ion-footer>

@@ -1,0 +1,203 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons *ngIf="showCloseButton" start>
+      <button ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="this.contact">
+    <div class="avatar-container">
+      <div class="image" [image-loader]="contact.picture"></div>
+			
+			<h2 [ngClass]="{'secondary': !isAgent}">
+				{{ isAgent? contact.firstname + ' ' + contact.lastname : contact.othernames }}
+			</h2>
+      
+      <ng-container *ngIf="friendship && friendship.friendship">
+        <a #downloadButton
+          *ngIf="!isAgent && friendship.catalog && friendship.friendship.accept"  
+          style="display: none;"
+          target="_blank"
+          [href]="friendship.catalog.downloadUrl"
+          download>
+        </a>
+
+        <button ion-button 
+          *ngIf="!isAgent && friendship.catalog && friendship.friendship.accept"
+          [color]="isAgent ? 'primary' : 'secondary'"
+          (click)="downloadCatalog()">
+          Descargar Catalogo
+        </button>
+
+        <button ion-button 
+          *ngIf="!isAgent && friendship.friendship.accept"
+          [color]="isAgent ? 'primary' : 'secondary'"
+          (click)="initProposal();">
+          Iniciar propuesta
+        </button>
+
+        <ng-container *ngIf="!friendship.friendship.accept">
+          <button ion-button 
+            *ngIf="friendship.friendship.createdBy === me.accountId && friendship.friendship.pendingAccept"
+            [color]="isAgent ? 'primary' : 'secondary'"
+            (click)="cancelLink()">
+            Cancelar Solicitud
+          </button>
+
+          <button ion-button 
+            *ngIf="friendship.friendship.linkedId === me.accountId && friendship.friendship.pendingAccept"
+            [color]="isAgent ? 'primary' : 'secondary'"
+            (click)="confirmLink()">
+            Aceptar Vinculacion
+          </button>
+
+          <button ion-button 
+            *ngIf="friendship.friendship.linkedId === me.accountId && friendship.friendship.pendingAccept"
+            [color]="isAgent ? 'primary' : 'secondary'"
+            (click)="rejectLink()">
+            Rechazar Vinculacion
+          </button>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="me.accountId !== contact.accountId && !friendship">
+        <button ion-button #sendLinkButton
+          [color]="isAgent ? 'primary' : 'secondary'"
+          (click)="sendLink(sendLinkButton)">
+          Solicitar Vinculacion
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="me.accountId === contact.accountId">
+        <button ion-button 
+          [color]="isAgent ? 'primary' : 'secondary'"
+          (click)="editProfile()">
+          Editar perfil
+        </button>
+
+        <button ion-button 
+          *ngIf="!isAgent"
+          [color]="isAgent ? 'primary' : 'secondary'"
+          (click)="uploadCatalog()">
+          Actualizar catalogo
+        </button>
+      </ng-container>
+    </div>
+
+		<div class="container profile" [ngClass]="{'secondary': !isAgent}">
+			<div class="item" *ngIf="!isAgent">
+				<h4>Descripción de la empresa</h4>
+				<p>{{ contact.description }}</p>
+		</div>
+
+			<div class="item">
+				<h4>Rubros</h4>
+				<ul>
+					<li *ngFor="let segment of contact.professionalPreferences.segment">
+						{{segment}}
+					</li>
+				</ul>
+			</div>
+			<div class="item" *ngIf="!isAgent">
+				<h4>Comisión</h4>
+				<span>
+					{{ contact.professionalPreferences.comission }}%
+					
+					<span *ngIf="contact.professionalPreferences.comissionDescription">
+						<br><br><b>Aclaración: </b> {{ contact.professionalPreferences.comissionDescription }}
+					</span>
+				</span>
+			</div>
+			<div class="item" *ngIf="isAgent">
+				<h4>Años de experiencia</h4>
+				<span>
+					{{
+						contact.professionalPreferences.experience?
+							getYearsOfExperience(contact.professionalPreferences.yearsOfExperience) :
+							contact.firstname + ' no cuenta con experiencia.'
+					}}
+				</span>
+			</div>
+
+			<div class="item">
+				<h4>{{ isAgent? 'Residencia' : 'Ubicación' }}</h4>
+				<span>
+					{{contact.location.city.printable_name + ', ' + contact.location.province.printable_name}}
+				</span>
+			</div>
+
+			<div class="item locations" *ngIf="contact.professionalPreferences.locations">
+				<h4>Ubicaciones de operación</h4>
+				<ul>
+					<li *ngFor="let workCities of contact.professionalPreferences.locations">
+						{{workCities.location.city.printable_name + ', ' + workCities.location.province.printable_name}}
+					</li>
+				</ul>
+			</div>
+
+			<div class="item locations">
+				<h4>Movilidad</h4>
+
+				<span *ngIf="contact.professionalPreferences.ownMobility === null">
+					{{contact.othernames || contact.firstname}} no especificó si dispone de movilidad.
+				</span>
+
+				<span *ngIf="contact.professionalPreferences.ownMobility === false">
+					{{contact.othernames || contact.firstname}} <b>no dispone</b> de movilidad.
+				</span>
+
+				<span *ngIf="contact.professionalPreferences.ownMobility === true">
+					{{contact.othernames || contact.firstname}} <b>dispone</b> de movilidad.
+        </span>
+
+        <span *ngIf="contact.professionalPreferences.ownMobilityDescription">
+          <br><br><b>Aclaración: </b> {{ contact.professionalPreferences.ownMobilityDescription }}
+        </span>
+			</div>
+
+			<div class="item">
+				<h4>{{ isAgent? 'Edad' : 'Inicio de Actividades' }}</h4>
+
+				<span>
+					{{ 
+						isAgent? 
+							getContactAge(contact.dateOfBirth) :
+							(contact.dateOfBirth | date: 'dd/MM/yyyy')
+						}}
+				</span>
+			</div>
+
+			<div class="item" *ngIf="isAgent && contact.professionalPreferences.experience">
+				<h4>Volumen de mis clientes</h4>
+				
+				<ul>
+					<li *ngFor="let volume of getVolumes(contact.professionalPreferences.purchaseVolume)">
+						{{ volume.label }}
+					</li>
+				</ul>
+			</div>
+
+			<div class="item" *ngIf="isAgent">
+				<h4>Sexo</h4>
+				
+				<span>{{ getContactGender(contact.gender) }}</span>
+			</div>
+
+			<div class="item">
+				<h4>Usuario desde</h4>
+
+				<span>
+					{{ contact.created_at | date: 'dd/MM/yyyy' }}
+				</span>
+			</div>
+    </div>
+  </div>
+</ion-content>

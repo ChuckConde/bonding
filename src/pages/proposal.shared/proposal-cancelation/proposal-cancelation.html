@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close();">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>Cancelar propuesta abierta</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+    
+<ion-content padding>
+  <div class="container">
+    <ng-container *ngIf="!isCalification">
+      <p>
+        Si cancelas una propuesta en tránsito, no podrás volver a enviar mensajes al usuario y se dará por finalizada.
+        <br>
+        Podrás iniciar una nueva propuesta con el mismo usuario en cualquier momento.
+        <br>
+        <br>
+        Te pedimos que ingreses un breve comentario sobre por qué estás tomando esta decisión:
+      </p>
+      
+      <ion-item>
+        <ion-textarea [formControl]="textareaControl"></ion-textarea>
+        <ion-label class="error" *ngIf="textareaControl.touched && !textareaControl.valid">
+          La descripción es obligatoria y debe ser como máximo de 200 caracteres.
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="isCalification">
+      <p>
+        ¡Gracias por ser parte de Bonding!
+        <br>
+        <br>
+        A continuación, te solicitamos que califiques y nos dejes un comentario sobre tu experiencia en esta propuesta.
+      </p>
+
+      <ion-item>
+        <div class="calification">
+          <span class="option" (click)="setCalification(1);" [ngClass]="{'selected': calification.value === 1}">
+            <ion-icon name="sad"></ion-icon>
+            <span class="label">Algo mal...</span>
+          </span>
+          <span class="option" (click)="setCalification(5);" [ngClass]="{'selected': calification.value === 5}">
+            <ion-icon name="happy"></ion-icon>
+            <span class="label">¡Todo perfecto!</span>
+          </span>
+        </div>
+        <ion-label class="error" *ngIf="calification.touched && !calification.valid">
+          Debes indicar una calificación.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea [formControl]="textareaControl"></ion-textarea>
+        <ion-label class="error" *ngIf="textareaControl.touched && !textareaControl.valid">
+        El comentario es requerido y debe ser como máximo de 200 caracteres.
+        </ion-label>
+      </ion-item>
+    </ng-container>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button
+      class="outline" 
+      (click)="close()" 
+      [ngClass]="{'secondary': !isAgent}">
+      Cancelar
+    </button>
+
+    <button ion-button 
+      (click)="confirm()" 
+      [disabled]="!isCalification? !textareaControl.valid : (!textareaControl.valid || !calification.valid)"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Confirmar
+    </button>
+  </div>
+</ion-footer>

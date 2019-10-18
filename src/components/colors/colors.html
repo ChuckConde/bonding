@@ -1,0 +1,10 @@
+<ion-list>
+    <ion-list-header>
+        Select a Color
+      </ion-list-header>
+  <ion-row *ngFor="let i of rows;">
+    <ion-col *ngFor="let color of colors | slice:(i*4):(i+1)*4" (click)="close(color)">
+      <div class="color" [style.background]="color"></div>
+    </ion-col>
+  </ion-row>
+</ion-list>

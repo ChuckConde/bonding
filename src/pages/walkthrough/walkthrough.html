@@ -1,0 +1,204 @@
+<ion-content>
+	<div *ngIf="showUserGreeting"
+		class="user-greeting"
+		[ngClass]="{
+			'fade-out': fadeOut
+		}">
+		<div class="wrapper">
+			<h1>¡Bienvenido a Bonding!</h1>
+
+			<p>
+				Te vamos a realizar algunas preguntas para poder acercarte mucho más fácil a los negocios que estás buscando.
+			</p>
+
+			<button ion-button block 
+				[color]="isAgent? 'primary' : 'secondary'" 
+				(click)="closeGreeting()">
+				Comenzar
+			</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<ion-slides effect="fade">
+			<ion-slide *ngFor="let slide of slides; let i = index">
+				<div *ngIf="i === currentIndex">
+				 <h1>{{ slide.title }}</h1>
+				 
+					<ng-container *ngIf="slide.help">
+						<i class="fa fa-question-circle"></i>
+					 	<p style="width: 100%;" [innerHTML]="slide.help"></p>
+					</ng-container>
+
+					<!-- Listado de locaciones seleccionadas -->
+					<div *ngIf="workLocationsList.length" class="items-list">
+						<p>Lugares seleccionados:</p>
+						<ul>
+							<li *ngFor="let item of workLocationsList">
+								{{ item.city }}, {{ item.province }}
+							</li>
+						</ul>
+					</div> 
+
+					<!-- Listado de rubros seleccionados  -->
+					<div *ngIf="slide.inputs[0].formName === 'segment' && form.value.segment && isAgent" 
+						class="items-list">
+							<p>
+								Rubros Seleccionados
+							</p>
+							<ul>
+								<li *ngFor="let val of form.value.segment">
+									{{val}}
+								</li>
+							</ul>
+					</div>
+
+					<div class="center">
+						<div *ngFor="let field of slide.inputs" >
+							<div style="max-width: 400px; margin: 0 auto;">
+								<form class="body custom-form" [formGroup]="form" [ngClass]="{'secondary': !isAgent}">
+									<ion-list>
+										<!-- Date -->
+										<ion-row *ngIf="field.type === 'date'">
+											<ion-item>
+												<ion-label *ngIf="field.label" floating>
+													{{field.label}}
+												</ion-label>
+												<ion-datetime displayFormat="DD MMM, YYYY" 
+													[max]="maxDate"
+													[formControlName]="field.formName"
+													doneText="Confirmar"
+													cancelText="Cancelar">
+												</ion-datetime>
+											</ion-item>
+											<p *ngIf="field.type === 'date'" 
+												class="error" 
+												[ngClass]="{
+													'show-error': form.controls[field.formName].errors &&
+													form.controls[field.formName].touched
+												}">
+												{{field.error}}
+											</p>
+										</ion-row>
+										<!-- Text -->
+										<ion-row *ngIf="field.type === 'text' || field.type === 'number'">
+											<ion-item>
+												<ion-label *ngIf="field.label" floating>
+													{{field.label}}
+												</ion-label>
+												<ion-input [type]="field.type" [formControlName]="field.formName">
+												</ion-input>
+											</ion-item>
+											<p class="error" 
+												[ngClass]="{
+													'show-error': form.controls[field.formName].errors &&
+													form.controls[field.formName].touched
+												}">
+												{{field.error}}
+											</p>
+										</ion-row>
+										<!-- Textarea -->
+										<ion-row *ngIf="field.type === 'textarea'">
+											<ion-item>
+												<ion-label *ngIf="field.label" floating>
+													{{field.label}}
+												</ion-label>
+												<ion-textarea [formControlName]="field.formName">
+												</ion-textarea>
+											</ion-item>
+											<p class="error" 
+												[ngClass]="{
+													'show-error': form.controls[field.formName].errors &&
+													form.controls[field.formName].touched
+												}">
+												{{field.error}}
+											</p>
+										</ion-row>
+										<!-- Checkbox -->
+										<ion-row *ngIf="field.type === 'checkbox'">
+											<ion-item>
+												<ion-label *ngIf="field.label" floating>
+													{{field.label}}
+												</ion-label>
+												<ion-select [multiple]="field.multiple"
+													okText="Continuar"
+													cancelText="Cancelar" 
+													[formControlName]="field.formName" 
+													[placeholder]="field.multiple ? 'Seleccione una o más opciones' : 'Seleccione una opción'">
+																		
+													<ion-option  *ngFor="let option of field.options" value="{{option.value}}">
+														{{option.label}}
+													</ion-option> 
+												</ion-select>
+											</ion-item>
+											<p class="error" 
+												[ngClass]="{
+													'show-error': form.controls[field.formName].errors &&
+													form.controls[field.formName].touched
+												}">
+												{{field.error}}
+											</p>
+										</ion-row>
+										<!-- Selectable -->
+										<ion-row [hidden]="!field.showField"
+										*ngIf="field.type === 'selectable' && field.options === 'provinces' ? provinces.length : cities.length">
+											<ion-item>
+												<ion-label *ngIf="field.label">
+													{{field.label}}
+												</ion-label>
+												<ionic-selectable
+													item-content
+													[formControlName]="field.formName"
+													[items]="field.options === 'provinces' ? provinces : cities"
+													itemValueField="value"
+													itemTextField="label"
+													searchPlaceholder="Buscar..."
+													searchFailText="No hay resultados"
+													[canSearch]="field.canSearch"
+													[hasVirtualScroll]="true"
+													(onSearch)="onSearch($event, field.formName)"
+													(onChange)="onChange($event, field.formName)">
+												</ionic-selectable>
+											</ion-item>
+											<p class="error" 
+												[ngClass]="{
+													'show-error': form.controls[field.formName].errors &&
+													form.controls[field.formName].touched
+												}">
+												{{field.error}}
+											</p>
+										</ion-row>
+									</ion-list>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<button *ngIf="addNewWorkLocation"
+						class="link"
+						(click)="addWorkLocation()">
+						Agregar otra ciudad/provincia
+					</button> 
+
+					<button ion-button block 
+						[color]="isAgent? 'primary' : 'secondary'" 
+						(click)="next()" 
+						[disabled]="!enableContinue">
+						{{this.currentIndex !== this.slides.length - 1 ? 'Siguiente': 'Empezar'}}
+					</button>
+				</div>
+			</ion-slide>
+		</ion-slides>
+	</div>
+</ion-content>
+
+<ion-footer *ngIf="!showUserGreeting">
+	<div class="footer">
+			<div class="center">
+				<div *ngFor="let item of slides; let i = index"
+					class="slide-bullet"  
+					[ngClass]="{'active': i === currentIndex}">
+				</div>
+			</div>
+		</div>
+</ion-footer>

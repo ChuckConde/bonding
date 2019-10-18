@@ -1,0 +1,41 @@
+<ion-content padding>
+  <div class="container">
+    <div class="text-content">
+      <div class="logo" [image-loader]="'assets/imgs/general/bonding2.png'"></div> 
+      <h2>¡Bienvenido!</h2>
+      <p>¡Bonding es la aplicación que revolucionara tu forma de relacionarte y hacer negocios!</p>
+    </div>
+
+    <div class="auth">
+      <button ion-button block color="primary" (click)="login()">
+        Iniciar Sesión
+			</button>
+			
+			<div class="social-auth" *ngIf="!isWeb">
+				<p>O inicia sesión con</p>
+
+				<div class="options-group">
+					<button ion-button block color="facebook" (click)="fbLogin()">
+						<ion-icon name="logo-facebook"></ion-icon>
+						<span class="label">Facebook</span>
+					</button>
+
+					<button ion-button block color="google" (click)="googleLogin()">
+						<ion-icon name="logo-google"></ion-icon>
+						<span class="label">Google</span>
+					</button>
+				</div>
+			</div>
+
+			<div class="new-user">
+				<p>
+					¿Aún no tienes cuenta? 
+					
+					<a href="#" (click)="signup($event)">
+						¡Registrate ahora!
+					</a>
+				</p>
+			</div>
+    </div>   
+  </div>
+</ion-content>

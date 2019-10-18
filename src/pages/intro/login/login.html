@@ -1,0 +1,70 @@
+<ion-content>
+  <div class="container">
+    <div class="bottom">
+      <div class="welcome">Ingresar</div>
+      
+      <form class="content custom-form" [formGroup]="form">
+		
+        
+      
+        <ion-list>
+          <ion-row>
+            <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.email.touched || loginRequest) && !form.controls.email.valid
+							}">
+							Debes ingresar un email válido
+						</p>
+          </ion-row>
+          
+          <ion-row>
+            <ion-item>
+              <ion-label floating>Contraseña</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+          
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.password.touched || loginRequest) && !form.controls.password.valid
+							}">
+							Debes ingresar una contraseña
+						</p>
+					</ion-row>
+					
+					<ion-row class="checkbox">
+						<ion-item>
+							<ion-label>Recordar mi cuenta</ion-label>
+							<ion-checkbox formControlName="rememberMe"></ion-checkbox>
+						</ion-item>
+					</ion-row>
+        </ion-list>
+
+				<p class="form-error" *ngIf="errorMsg">
+          {{ errorMsg }}
+        </p>
+
+				<button ion-button block color="primary" 
+          (click)="login()">
+          Ingresar
+        </button>
+        
+        <button ion-button block (click)="close()" class="cancel-button">
+          Cancelar
+        </button>
+
+        <p>
+          ¿Olvidaste tu contraseña? 
+          <a class="link" (click)="forgot()">
+            Restablecela aqui
+          </a>
+        </p>
+      </form>
+
+    </div>
+  </div>
+</ion-content>

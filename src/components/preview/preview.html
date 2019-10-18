@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+  <ion-buttons start>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>Vista Previa</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  <div class="content">
+    <ng-container *ngIf="!multiple">
+      <img class="image" [src]="images">
+      <!-- <div class="image" [image-loader]="images"></div> -->
+    </ng-container>
+    <ng-container *ngIf="multiple">
+      <image-slider [images]="images"></image-slider>
+    </ng-container>
+      
+    <button ion-button full 
+      (click)="upload()"
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      {{ multiple ? 'Subir más imagenes': 'Cambiar imagen' }}
+    </button>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button
+      class="outline" 
+      (click)="viewCtrl.dismiss()" 
+      [ngClass]="{'secondary': !isAgent}">
+      Cancelar
+    </button>
+
+    <button ion-button 
+      (click)="viewCtrl.dismiss(images)" 
+      [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+      Confirmar
+    </button>
+  </div>
+</ion-footer>

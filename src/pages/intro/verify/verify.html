@@ -1,0 +1,40 @@
+<ion-content>
+    <div class="container">
+      <div class="bottom">
+        <div class="welcome">Una cosa mas!</div>
+        <div class="content custom-form">
+          <p>
+						Verifica tu email, un correo con tu código a sido enviado a {{credentials?.email}}.
+            Introduce tu código aqui
+					</p>
+					
+          <ion-list [formGroup]="form">
+						<ion-row class="flex-direction-column">
+							<pin-verify (pinChange)="setPin($event)"></pin-verify>
+							
+							<p class="error pin-error" 
+								[ngClass]="{
+									'show-error': (form.controls.passcode.touched || verifyRequest) && !form.controls.passcode.valid
+								}">
+								Debes ingresar un código de verificación válido.
+							</p>
+						</ion-row>
+					</ion-list>
+
+					<p class="form-error" *ngIf="errorMsg">
+						{{errorMsg}}
+					</p>
+					
+					<button ion-button block 
+						(click)="verify()">
+						Verificar
+					</button>
+          <p>
+						¿No puedes encontrar tu código? 
+						<a (click)="resendVerification()">Re enviar</a>
+					</p>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  

@@ -1,0 +1,25 @@
+colors {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ion-list{
+      margin-bottom:0 !important;
+    }
+    ion-row {
+      margin: 5px 10px;
+      ion-col {
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        .color {
+          height: 30px;
+          width: 30px;
+          border-radius: 100%;
+          display: flex;
+          flex: 1;
+          align-self: center;
+          margin: auto;
+        }
+      }
+    }
+}

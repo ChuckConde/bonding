@@ -1,0 +1,92 @@
+page-setting {
+  ion-content {
+    @include content-styles('', hidden, auto);
+  }
+
+  .setting {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex: 1;
+	
+    & > .header {
+      display: flex;
+      align-items: center;
+      margin: -16px -16px 0 -16px;
+      padding: 20px;
+      background-color: #dddddd;
+
+      & > .image {
+        height: 80px;
+        width: 80px;
+        background-position: center;
+        background-size: cover;
+        border-radius: 100%;
+      }
+
+      & > .desc {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 20px;
+				
+        & > .name {
+          font-size: 20px;
+          font-weight: 500;
+          margin: 0 0 10px 0;
+          color: color($colors, bondingPrimary);	
+        }
+				
+        &.secondary {
+          .name { color: color($colors, bondingSecondary); }
+        }
+
+        &>.bio {
+          font-size: 1.3rem;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          height: 40px;
+        }
+      }
+
+      & > .action {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    & > .content {
+      display: flex;
+      flex-direction: column;
+      flex: 3;
+
+      ion-item-group {
+        margin: 10px 0;
+        
+        ion-item-divider {
+          font-weight: 500;
+          font-size: 1.15em;
+        }
+
+        ion-item { font-size: 1.4rem; }
+      }
+
+      .save-btn {
+        max-width: 300px;
+        margin: 2em auto 0 auto;
+      }
+
+      .logout-btn {
+        color: color($colors, secondary);
+        display: inline-block;
+        padding: 5px 0 0 16px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .item-md.item-block .item-inner {
+    border: none;
+    cursor: pointer;
+  }
+}

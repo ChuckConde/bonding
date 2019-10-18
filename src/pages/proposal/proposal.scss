@@ -1,0 +1,72 @@
+page-proposal {
+  ion-header {
+    .proposal-header {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      margin: 0 -12px;
+
+      .image {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .detail {
+        width: calc(100% - 55px);
+        margin: 0 0 0 10px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        
+        .info {
+          display: flex;
+          flex-direction: column;
+          height: 40px;
+          justify-content: space-between;
+          width: 100%;
+          box-sizing: border-box;
+          overflow: hidden;
+          padding: 0 20px 0 0;
+
+          .name {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .help-text {
+            font-size: 12px;
+            text-transform: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        ion-icon {
+          transform: rotate(90deg);
+          font-size: 30px;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  & > ion-content {
+   & > .scroll-content {
+     overflow: hidden;
+     padding: 0 !important;
+   } 
+  }
+}

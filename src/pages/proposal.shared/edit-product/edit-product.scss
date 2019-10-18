@@ -1,0 +1,92 @@
+edit-product {
+  div.content {
+    overflow: auto;
+    flex-grow: 1;
+    height: 100%;
+    
+    form {
+      max-width: 600px;
+      padding: 20px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    ion-row {
+      justify-content: space-between;
+
+      ion-item {
+        width: 48%;
+      }
+
+      &.product-row {
+        position: relative;
+
+        ion-item {
+          &:nth-child(1) {
+            width: 64%;
+          }
+
+          &:nth-child(2) {
+            width: 31%;
+          }
+        }
+
+        .error {
+          margin: 0;
+          padding: 0;
+          color: #cc0000 !important;
+          font-size: 1.2rem;
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+
+    ion-item {
+      position: relative;
+  
+      .item-inner {
+        padding-bottom: 20px;
+  
+        .error {
+          margin: 0;
+          padding: 0;
+          color: #cc0000 !important;
+          font-size: 1.2rem;
+          position: absolute;
+          bottom: 0px;
+        }
+      }
+
+      ion-textarea {
+        textarea {
+          resize: none;
+          margin: 0 0 20px 0;
+          width: 100%;
+          height: 75px;
+        }
+      }
+    }
+  }
+
+  ion-footer {
+    .action-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+  
+      button {
+        width: 150px;
+        margin: 0;
+  
+        &.outline {
+          margin: 0 15px 0 0;
+          background-color: transparent !important;
+          color: color($colors, bondingPrimary);
+          border: 2px solid color($colors, bondingPrimary);
+        }
+      }
+    }
+  }
+}

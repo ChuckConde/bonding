@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Vinculaciones</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding [ngClass]="{'secondary': !isAgent}">
+	<div class="tabs">
+		<div class="tab" 
+			[ngClass]="{'active': activeTab === 'ACTIVE'}"
+			(click)="setActiveTab('ACTIVE')">
+			Activas
+		</div>
+
+		<div class="tab" 
+			[ngClass]="{'active': activeTab === 'PENDING'}"
+			(click)="setActiveTab('PENDING')">
+			Pendientes
+		</div>
+
+		<div class="tab" 
+			[ngClass]="{'active': activeTab === 'DELETED'}"
+			(click)="setActiveTab('DELETED')">
+			Finalizadas
+		</div>
+	</div>
+
+	<div class="container">
+		<div *ngIf="activeTab === 'ACTIVE'" class="content-wrapper">
+			<h4>Activas</h4>
+      
+      <contact-list *ngIf="!loadingFlag"
+        [links]="links" 
+        [settings]="{
+          isAgent: isAgent,
+          noDataText: 'No hay vinculaciones activas.',
+          dateLabel: 'Vinculados desde el',
+          dateKey: 'created_at'
+        }" 
+        (event)="openOptions('ACTIVE', $event)">
+      </contact-list>
+		</div>
+		
+		<div *ngIf="activeTab === 'PENDING'" class="content-wrapper">
+      <h4>Pendientes</h4>
+      
+      <contact-list *ngIf="!loadingFlag"
+        [links]="links" 
+        [settings]="{
+          isAgent: isAgent,
+          noDataText: 'No hay vinculaciones recibidas.',
+          dateLabel: 'Recibida el',
+          dateKey: 'created_at',
+          showChip: true
+        }" 
+        (event)="openOptions('PENDING', $event)">
+      </contact-list>
+		</div>
+
+		<div *ngIf="activeTab === 'DELETED'" class="content-wrapper">
+			<h4>Finalizadas</h4>
+
+      <contact-list *ngIf="!loadingFlag"
+        [links]="links" 
+        [settings]="{
+          isAgent: isAgent,
+          noDataText: 'No hay vinculaciones finalizadas.',
+          dateLabel: 'Finalizada el',
+          dateKey: 'updated_at'
+        }" 
+        (event)="openOptions('DELETED', $event)">
+      </contact-list>
+		</div>
+	</div>
+</ion-content>

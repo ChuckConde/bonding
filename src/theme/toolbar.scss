@@ -1,0 +1,21 @@
+@mixin toolbar-styles($background, $color){
+	.toolbar-background
+	{
+		border: none !important;
+		background-color: $background !important;
+	}
+	
+
+	.toolbar-title,
+	.back-button,
+	.bar-button
+	{
+		color: $color;
+  }
+
+  .toolbar-title{
+    font-weight: 300;
+    text-transform: capitalize;
+  }
+}
+

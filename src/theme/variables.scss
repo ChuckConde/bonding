@@ -1,0 +1,140 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+$fa-font-path: $font-path;
+$simple-line-font-path: $font-path + "/";
+
+@import "font-awesome";
+@import "simple-line-icons";
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+
+@import "ionic.globals";
+
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #f15232,
+  secondary:  #201d48,
+  tertiary:   #FF4653,
+  favorite:   #E2B90B,
+  danger:     #C91914,
+  light:      #ffffff,
+  dark:       #2f353b,
+  stable:     #97a0a9,
+  royal:      #886aea,
+  charcoal:   #363E4B,
+  facebook:   #3f5d94,
+  google:     #dc4e41,
+  twitter:    #1da1f2,
+  bondingPrimary: #f15232,
+  bondingSecondary: #201d48
+);
+
+@mixin box_shadow ($level) {
+  
+  @if $level == 1 {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  } @else if $level == 2 {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  } @else if $level == 3 {
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  } @else if $level == 4 {
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  } @else if $level == 5 {
+      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+
+}
+
+$text-color: color($colors, dark);
+$background-color: color($colors, light);
+$menu-width: 200px;
+$menu-hide-position: -200px;
+$headings-font-weight: 300;
+$toolbar-background: darken(color($colors, light), 5%);
+$toolbar-ios-button-color: color($colors, dark);
+$toolbar-md-button-color: color($colors, dark);
+$tabs-background: darken(color($colors, light), 5%);
+$tabs-md-tab-color-active:color($colors, primary);
+$text-input-highlight-color-invalid:  color($colors, danger);
+$text-input-highlight-color-valid: color($colors, primary);
+
+$font-family-ios-base: 'Quicksand', sans-serif;
+$font-family-md-base: 'Quicksand', sans-serif;
+$toolbar-ios-title-font-weight: 400;
+$toolbar-md-title-font-weight: 400;
+$item-md-divider-background: lighten(color($colors, stable), 30%);
+$action-sheet-md-title-color: color($colors, primary);
+$item-md-body-text-font-size: 1.2rem;
+$item-md-divider-font-size:1.5rem;
+$text-input-md-show-focus-highlight: false;
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";

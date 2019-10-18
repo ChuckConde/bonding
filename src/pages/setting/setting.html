@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Ajustes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="setting">
+    <div class="header">
+      <div class="image" [image-loader]="me.picture"></div>
+      
+      <div class="desc" [ngClass]="{'secondary': !isAgent}">
+        <div class="name">
+          {{
+            isAgent?
+              me.firstname + ' ' + me.lastname :
+              me.othernames
+          }}
+        </div>
+        <button ion-button small 
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'" 
+          (click)="gotoProfile()">
+          VER PERFIL
+        </button>
+      </div>
+    </div>
+		
+     <div class="content">
+      <ion-item-group>
+        <ion-item-divider color="light">Mi Cuenta</ion-item-divider>
+        <ion-item (click)="editProfile()">
+          Editar datos de perfil
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="!isAgent" (click)="uploadCatalog()">
+          {{ catalog ? 'Actualizar catalogo' : 'Subir catalogo' }}
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="openPlan()">
+          Ver mi plan
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+      </ion-item-group>
+      
+      <ion-item-group>
+        <ion-item-divider color="light">Privacidad</ion-item-divider>
+        <ion-item (click)="changePassword()">
+          Cambiar contraseña
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="openTos()">
+          Ver términos y condiciones
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+      </ion-item-group>
+
+      <ion-item-group>
+        <ion-item-divider color="light">Sesión</ion-item-divider>
+        <ion-item>
+          <span class="logout-btn" (click)="logout()">Cerrar sesión</span>
+          <ion-icon name="arrow-forward" color="stable" item-end></ion-icon>
+        </ion-item>
+      </ion-item-group>
+    </div>
+  </div>
+</ion-content>

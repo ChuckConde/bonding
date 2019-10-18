@@ -1,0 +1,11 @@
+{
+    "android": {
+        "release": {
+            "keystore": "my-release-key.jks",
+            "alias": "my-alias",
+            "password" : "bonding",
+            "storePassword": "bonding",
+            "keystoreType": ""
+        }
+    }
+}

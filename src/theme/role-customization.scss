@@ -1,0 +1,97 @@
+.action-sheet-md .action-sheet-title {
+	position: relative;
+	
+	&::after {
+		content: '';
+		background-color: color($colors, bondingPrimary);
+		height: 3px;
+		display: block;
+		position: absolute;
+		bottom: 0;
+		left: 10px;
+		right: 10px;
+	}
+}
+
+.custom-form {
+  .item-input .label-md, 
+  .item-select .label-md, 
+  .item-datetime .label-md {
+    color: color($colors, bondingPrimary);
+  }
+}
+
+.role-company {
+	.custom-form {
+		.item {
+			&.input-has-focus,
+      &.input-has-value {
+        ion-label[floating] {
+					color: color($colors, bondingSecondary);
+				}
+			}
+		}
+
+		.item-md.item-input.item-input-has-focus .item-inner, 
+		.item-md.item-input.input-has-focus .item-inner{
+			ion-input{
+				border-color: color($colors, bondingSecondary);
+			}
+    }
+
+    .item-input .label-md, 
+    .item-select .label-md, 
+    .item-datetime .label-md {
+      color: color($colors, bondingSecondary);
+    }
+	}
+	.picker-md .picker-button, 
+	.picker-md .picker-button.activated, 
+	.picker-md .picker-opt.picker-opt-selected {
+		color: color($colors, bondingSecondary);
+	}
+
+	ionic-selectable-page {
+		.icon-md-primary {
+			color: color($colors, bondingSecondary);
+		}
+	}
+
+	ion-alert {
+		.alert-wrapper {
+			.alert-button {
+				color: color($colors, bondingSecondary);
+			}
+
+			[aria-checked=true] .alert-checkbox-icon {
+				border-color: color($colors, bondingSecondary);
+				background-color: color($colors, bondingSecondary);
+			}
+		}
+	}
+
+	.action-sheet-md .action-sheet-title {
+		color: color($colors, bondingSecondary);
+  }
+  
+  .alert-md [aria-checked=true] .alert-radio-label {
+		color: color($colors, bondingSecondary);
+  }
+
+  .alert-md [aria-checked=true] .alert-radio-icon {
+		border-color: color($colors, bondingSecondary);
+  }
+
+  .alert-md .alert-radio-inner {
+		background-color: color($colors, bondingSecondary);
+  }
+
+	page-links {
+		.button-clear-md {
+			color: color($colors, bondingSecondary);
+		}
+	}
+	.loading-md .spinner-crescent circle {
+		stroke: color($colors, bondingSecondary);
+	}
+}

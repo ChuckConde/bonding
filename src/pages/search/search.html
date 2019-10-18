@@ -1,0 +1,127 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Buscar</ion-title>
+	</ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<div class="container" [ngClass]="{'secondary': !isAgent}">
+		<div class="search-controls">
+			<div class="filter-container">
+				<button ion-button 
+					(click)="changeParams()"
+					[color]="isAgent? 'primary' : 'secondary'">
+					<ion-icon name="md-options"></ion-icon>
+					<span class="label">Filtrar</span>
+				</button>
+			</div>
+
+			<div *ngIf="chips && chips.length" class="chip-container">
+				<ng-container *ngFor="let chip of chips">
+					<div *ngIf="chip" class="chip">
+						<span class="chip-text" [innerHTML]="chip"></span>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+		
+		<div *ngIf="!loadingFlag && contacts.length" class="items">
+			<ion-card *ngFor="let contact of contacts">
+				<ion-card-header>
+					<ion-card-title>
+						<ion-avatar>
+							<div class="image" [image-loader]="contact.picture"></div>
+							
+							<div class="info">
+								<span class="name">
+									{{ 
+										isAgent ? 
+											contact.othernames :
+											contact.firstname + ' ' + contact.lastname
+									}}
+								</span>
+	
+								<ion-chip *ngIf="!isAgent">
+									<ion-label>
+										{{
+											contact.professionalPreferences.experience ? 
+												'Con Experiencia' : 
+												'Sin Experiencia'
+										}}
+									</ion-label>
+								</ion-chip>
+							</div>
+						</ion-avatar>
+					</ion-card-title>
+				</ion-card-header>
+				
+				<ion-card-content>
+					<div class="data-wrapper">
+						<div class="data-group">
+							<h2>Rubro</h2>
+							<span *ngFor="let segment of contact.professionalPreferences.segment; let i=index">
+								{{ i == 0? segment : ', ' + segment }}
+							</span>
+						</div>
+
+						<div class="data-group">
+							<h2>
+								{{ isAgent ? 'Casa central': 'Reside' }}
+							</h2>
+							
+							<span>{{
+									contact.location.city.printable_name + 
+									', ' + 
+									contact.location.province.printable_name
+									}}
+							</span>
+						</div>
+
+						<div class="data-group">
+							<h2>
+								{{ isAgent ? 'Inicio de actividades' : 'Edad' }}
+							</h2>
+							
+							<span>
+								{{ 
+									isAgent ? 
+										(contact.dateOfBirth | date: 'dd/MM/yyyy') :
+										getContactAge(contact.dateOfBirth) 
+								}}
+							</span>
+						</div>
+					</div>
+
+					<div class="action-wrapper">
+							<button ion-button [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'"
+								class="outline"
+								(click)="goToProfile(contact)">
+								VER PERFIL
+							</button>
+
+							<button ion-button [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'" 
+								(click)="sendLinkInvitation(contact)" 
+								[disabled]="linksLimit || (contact.status && (contact.status === 'PENDING' || contact.status === 'ACCEPTED'))">
+								{{
+									(contact.status && contact.status === 'PENDING') ? 
+                    'VINCULACION PENDIENTE':
+                    (contact.status && contact.status === 'ACCEPTED') ?
+                      'VINCULACION ACEPTADA' : 
+                      'SOLICITAR VINCULACION'
+								}}
+							</button>
+					</div>
+				</ion-card-content>
+			</ion-card>
+		</div>
+		
+		<div *ngIf="!loadingFlag && !contacts.length" class="empty-list">
+			<no-data [options]="{text: 'No hay resultados para la búsqueda.'}">
+			</no-data>
+		</div>
+	</div>
+</ion-content>

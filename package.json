@@ -1,0 +1,128 @@
+{
+  "name": "full-starter-3",
+  "version": "0.0.1",
+  "author": "Ionic Framework",
+  "homepage": "http://ionicframework.com/",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "docs": "npm run typedoc",
+    "typedoc": "typedoc --out ./docs ./src",
+    "browser": "ionic-app-scripts serve --sourceMap source-map --iscordovaserve --wwwDir platforms/browser/www/ --buildDir platforms/browser/www/build"
+  },
+  "config": {
+    "ionic_copy": "./config/copy.config.js",
+    "ionic_sass": "./config/sass.config.js"
+  },
+  "dependencies": {
+    "@angular/common": "5.0.3",
+    "@angular/compiler": "5.0.3",
+    "@angular/compiler-cli": "5.0.3",
+    "@angular/core": "5.0.3",
+    "@angular/forms": "5.0.3",
+    "@angular/http": "5.0.3",
+    "@angular/platform-browser": "5.0.3",
+    "@angular/platform-browser-dynamic": "5.0.3",
+    "@ionic-native/base64": "^4.5.2",
+    "@ionic-native/call-number": "^4.5.2",
+    "@ionic-native/camera": "^4.5.2",
+    "@ionic-native/core": "4.4.0",
+    "@ionic-native/facebook": "^4.5.2",
+    "@ionic-native/file": "^4.20.0",
+    "@ionic-native/file-transfer": "^4.20.0",
+    "@ionic-native/geolocation": "^4.5.2",
+    "@ionic-native/google-plus": "^4.5.2",
+    "@ionic-native/image-picker": "^4.5.2",
+    "@ionic-native/keyboard": "^4.5.2",
+    "@ionic-native/native-storage": "^4.5.2",
+    "@ionic-native/network": "^4.5.2",
+    "@ionic-native/social-sharing": "^4.5.2",
+    "@ionic-native/splash-screen": "4.4.0",
+    "@ionic-native/status-bar": "4.4.0",
+    "@ionic/storage": "2.1.3",
+    "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-trial/-/angular-trial-4.4.2.tgz",
+    "angular2-moment": "^1.7.1",
+    "call-number": "^1.0.1",
+    "chart.js": "^2.7.1",
+    "com-badrit-base64": "^0.2.0",
+    "com.synconset.imagepicker": "^2.1.10",
+    "cordova-android": "6.4.0",
+    "cordova-plugin-camera": "^3.0.0",
+    "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-facebook4": "^3.1.0",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova-plugin-geolocation": "^3.0.0",
+    "cordova-plugin-googleplus": "^6.0.0",
+    "cordova-plugin-ionic-webview": "^1.2.1",
+    "cordova-plugin-nativestorage": "^2.3.2",
+    "cordova-plugin-network-information": "^1.3.4",
+    "cordova-plugin-splashscreen": "^4.1.0",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-telerik-imagepicker": "^2.1.8",
+    "cordova-plugin-whitelist": "git+https://github.com/apache/cordova-plugin-whitelist.git",
+    "cordova-plugin-x-socialsharing": "^5.4.0",
+    "es6-promise-plugin": "^4.2.2",
+    "font-awesome": "^4.7.0",
+    "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionic-selectable": "^3.0.3",
+    "ionic2-rating": "^1.2.2",
+    "ionicons": "3.0.0",
+    "moment": "^2.20.1",
+    "mx.ferreyra.callnumber": "0.0.2",
+    "ng2-validation": "^4.2.0",
+    "platform": "1.3.5",
+    "rxjs": "5.5.2",
+    "simple-line-icons": "^2.4.1",
+    "socket.io-client": "^2.0.4",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.8.18"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "3.1.6",
+    "@types/socket.io-client": "^1.4.32",
+    "codelyzer": "^4.0.2",
+    "typescript": "2.4.2"
+  },
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-camera": {},
+      "mx.ferreyra.callnumber": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      },
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-nativestorage": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-x-socialsharing": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "call-number": {},
+      "com.synconset.imagepicker": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "your usage message"
+      },
+      "com-badrit-base64": {},
+      "cordova-plugin-facebook4": {
+        "APP_ID": "305102500258287",
+        "APP_NAME": "Bonding",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.37.0"
+      },
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.667610269058-fsm7ci6ql4t4qhk822sgbkc18md6g5bb"
+      },
+      "cordova-plugin-file-transfer": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}

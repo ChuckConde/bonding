@@ -1,0 +1,41 @@
+preview {
+  .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .image {
+      height: auto;
+      width: auto;
+      max-width: 100%;
+      max-height: calc(100% - 45px);
+    }
+  }
+
+  ion-footer {
+    .action-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+  
+      button {
+        width: 150px;
+        margin: 0;
+  
+        &.outline {
+          margin: 0 15px 0 0;
+          background-color: transparent !important;
+          color: color($colors, bondingPrimary);
+          border: 2px solid color($colors, bondingPrimary);
+    
+          &.secondary {
+            color: color($colors, bondingSecondary);
+            border: 2px solid color($colors, bondingSecondary);
+          }
+        }
+      }
+    }
+  }
+}

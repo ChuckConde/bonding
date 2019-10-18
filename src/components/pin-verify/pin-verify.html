@@ -1,0 +1,10 @@
+<ion-row class="custom-form">
+	<ion-col>
+		<ion-input
+			type="text"
+			maxlength="4"
+			[(ngModel)]="pin"
+			(ngModelChange)="emitPin()">
+		</ion-input>
+	</ion-col>
+</ion-row>

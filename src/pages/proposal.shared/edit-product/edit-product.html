@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close();">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>Editar Producto</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content padding>
+  <div class="content">
+    <form class="body custom-form product-form" [formGroup]="form">
+      <ion-list>
+        <ion-row class="product-row">
+          <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label floating>Cantidad</ion-label>
+            <ion-input type="text" formControlName="amount"></ion-input>
+          </ion-item>
+
+          <ion-label class="error" 
+            *ngIf="
+              (form.controls.amount.touched || form.controls.name.touched) && 
+              (!form.controls.amount.valid || !form.controls.name.valid)
+            ">
+            Debes indicar nombre y cantidad.
+          </ion-label>
+        </ion-row>
+            
+        <ion-item>
+          <ion-label floating>Observaciones</ion-label>
+          <ion-textarea formControlName="notes"></ion-textarea>
+          <ion-label class="error" *ngIf="form.controls.notes.touched && !form.controls.notes.valid">
+            Debes poner como máximo 200 caracteres.
+          </ion-label> 
+        </ion-item>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button class="outline" (click)="close()">
+      Cancelar
+    </button>
+
+    <button ion-button (click)="save()" [disabled]="!form.valid">
+      Guardar
+    </button>
+  </div>
+</ion-footer>

@@ -1,0 +1,95 @@
+page-intro {
+  ion-content {
+    @include content-styles('', hidden, hidden);
+	}
+
+	.scroll-content { overflow: auto !important; }
+	
+	.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+		width: 100%;
+		max-width: 350px;
+		height: 100%;
+		min-height: 590px;
+		margin: 0 auto;
+		text-align: center;
+
+		.text-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 0 0 40px 0;
+
+			.logo {
+				width: 250px;
+				height: 200px;
+			}
+			
+			h2 { margin: 20px 0 10px 0; }
+
+			p { margin: 0; }
+		}
+
+		.auth {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			button { margin: 0; }
+
+			.social-auth {
+				margin: 25px 0 0 0;
+
+				p { margin: 0 0 10px 0; }
+
+				.options-group {
+					display: flex;
+					justify-content: space-between;
+
+					button {
+						width: 45%;
+
+						.label {
+							text-transform: capitalize;
+							margin: 0 0 0 5px;
+						}
+					}
+				}
+			}
+
+			.new-user {
+				margin: 60px 0 20px 0;
+				padding: 20px 0 0 0;
+				position: relative;
+
+				&::before {
+					content: '';
+					height: 1px;
+					background-color: #DDDDDD;
+					position: absolute;
+					top: 0;
+					left: 20px;
+					right: 20px;
+				}
+
+				p { margin: 0; }
+				
+				a { color: color($colors, secondary); }
+			}
+		}
+
+		@media (min-width: 768px) {
+			p { font-size: 16px; }
+		}
+	}
+}
+
+pin-verify { margin: 0 auto; }
+
+pin-verify ~ .pin-error {
+	right: 1rem;
+	text-align: center!important;
+}

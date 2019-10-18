@@ -1,0 +1,27 @@
+tos {
+  ion-content {
+    .scroll-content {
+      margin-bottom: 65px !important;
+      
+      .container {
+        padding: 10px 30px;
+        background-color: #f9f9f9;
+      }
+    }
+  }
+
+  ion-footer {
+    background-color: #FFFFFF;
+
+    .action-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+
+      button {
+        width: 150px;
+      }
+    }
+  }
+}

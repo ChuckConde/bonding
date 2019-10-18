@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>Cargar recibo y comisión</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="container">
+    <p>
+      Para avanzar la propuesta al siguiente paso, deberás agregar un recibo que describa el pedido solicitado por el Agente (factura, remito, ticket).
+      <br>
+      <br>
+      Además, deberás confirmar el porcentaje de comisión acordado para esta propuesta y el monto total de la operación.
+    </p>
+
+    <form class="body custom-form" [formGroup]="form">
+      <ion-item>
+        <div class="file-wrapper" (click)="openExplorer()">
+          <div class="button">
+            <ion-icon name="ios-document-outline"></ion-icon>
+            <span>Seleccionar archivo</span>
+          </div>
+      
+          <div *ngIf="file" class="file-name">
+            {{ file.name }}
+          </div>
+        </div>
+          
+        <input #inputFile type="file" name="file" (change)="fileChange($event)">
+      </ion-item>
+      
+      <ion-item>
+        <ion-label floating>Porcentaje de comisión</ion-label>
+        <ion-input type="text" formControlName="commision"></ion-input>
+        <ion-label class="error" *ngIf="form.controls.commision.touched && !form.controls.commision.valid">
+          Debes el porcentaje de comisión.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Monto total de la operación</ion-label>
+        <ion-input type="text" formControlName="totalAmount"></ion-input>
+        <ion-label class="error"*ngIf="form.controls.totalAmount.touched && !form.controls.totalAmount.valid">
+          Debes completar el monto total de la operación.
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Monto total de la comisión</ion-label>
+        <ion-input type="text" formControlName="commisionAmount"></ion-input>
+      </ion-item>
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <div class="action-wrapper">
+    <button ion-button
+      class="outline" 
+      (click)="close()">
+      Cancelar
+    </button>
+
+    <button ion-button 
+      color="bondingSecondary"
+      (click)="confirm()" 
+      [disabled]="!form.valid || !(this.file && !this.maxFileSize)">
+      Confirmar
+    </button>
+  </div>
+</ion-footer>

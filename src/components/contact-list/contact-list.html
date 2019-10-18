@@ -1,0 +1,43 @@
+<div *ngIf="links && links.length > 0; then dataTemplate else noDataTemplate"></div>
+
+<ng-template #dataTemplate>
+  <div *ngFor="let link of links" class="link-item" [ngClass]="{'secondary': !settings.isAgent}">
+    <div class="item">
+      <div class="image" [image-loader]="link.linked.contact.picture"></div>
+      
+      <div class="detail" (click)="emitEvent(link)">
+        <div class="info">
+          <span class="name">
+            {{
+              settings.isAgent?
+                link.linked.contact.othernames : 
+                link.linked.contact.firstname + ' ' + link.linked.contact.lastname
+            }}
+          </span>
+
+          <ion-chip *ngIf="settings.showChip">
+            <ion-label>
+              {{ link.sended ? 'Enviada' : 'Recibida' }}
+            </ion-label>
+          </ion-chip>
+        </div>
+
+        <h5> 
+          {{ (settings.showChip && link.sended) ? 'Enviada el' : settings.dateLabel }}
+          {{ link[settings.dateKey] | date: 'dd/MM/yyyy' }}
+        </h5>
+      </div>
+
+      <div class="more">
+        <button ion-button icon-only clear (click)="emitEvent(link)">
+          <simple-line-icon name="options-vertical"></simple-line-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noDataTemplate>
+  <no-data [options]="{text: settings.noDataText}">
+  </no-data>
+</ng-template>

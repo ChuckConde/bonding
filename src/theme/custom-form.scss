@@ -1,0 +1,63 @@
+$grey: #dedede;
+$dark-grey: #4F5558;
+.custom-form {
+	.item {
+		padding-left: 0 !important;
+		&.item-input:last-child {
+			border-bottom: 0!important;
+		}
+		.item-inner {
+			border-bottom: none !important;
+			padding-right: 0 !important;
+			box-shadow: none!important;
+		}
+		ion-label[floating] {
+			transform: translate3d(10px, 29px, 0)!important;
+			color: $dark-grey;
+			ion-icon {
+				margin-right: 10px;
+				font-size: 2.4rem;
+			}
+		}
+		ion-input,
+		ion-textarea,
+		ion-select {
+			border: 1px solid $grey;
+			padding: 0 10px;
+			border-radius: 6px;
+		}
+		ion-select{
+			padding: 8px 10px;
+		}
+		&.input-has-focus,
+		&.input-has-value {
+			ion-label[floating] {
+				transform: translate3d(0, 0, 0) scale(0.9)!important;
+				color: color($colors, primary);
+			}
+		}
+	}
+}
+
+.item-md.item-input.item-input-has-focus .item-inner, 
+.item-md.item-input.input-has-focus .item-inner{
+	ion-input{
+		border-color: color($colors, primary);
+	}
+}
+.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner{
+	ion-label{
+		color: color($colors, danger);
+	}
+	ion-input{
+		border-color: color($colors, danger);
+	}
+}
+
+.cancel-button {
+	background-color: gray;
+}
+
+.alert-md .alert-radio-label {
+  white-space: inherit;
+}

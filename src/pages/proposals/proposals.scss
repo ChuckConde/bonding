@@ -1,0 +1,246 @@
+page-proposals {
+  ion-content {
+    .tabs {
+      margin: -16px -16px 0 -16px; 
+      width: 100vw;
+      display: flex;
+
+      .tab {
+        flex: 0 0 50%;
+        text-align: center;
+        background-color: #ffffff;
+        padding: 20px 0;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          background-color: color($colors, bondingPrimary);
+          border-radius: 50%;
+          font-size: 12px;
+          font-weight: 500;
+          margin: 0 0 0 5px;
+          color: #FFFFFF;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &.active {
+          background-color: #ffffff;
+          border: none;
+          color: color($colors, bondingPrimary);
+
+          &::after {
+            content: '';
+            background-color: color($colors, bondingPrimary);
+            height: 3px;
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            right: 10px;
+          }
+        }
+
+        @media(min-width: 768px) {
+          flex: 0 0 calc(50% - 200px / 2);
+        }
+      }
+    }
+    
+    .container {
+      max-width: 1200px;
+      box-sizing: border-box;
+      margin: 0 auto;
+
+      .content-wrapper {
+        margin: 20px auto 0 auto;
+        max-width: 700px;
+
+        .conversations {
+          button {
+            margin: 0 auto 30px auto;
+            display: block;
+          }
+
+          .conversation {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 20px 10px;
+            margin: 0 0 20px 0;
+            border-radius: 4px;
+            box-shadow: 0px 2px 5px -4px color($colors, bondingPrimary);
+            cursor: pointer;
+            position: relative;
+
+            &.unreaded-messages {
+              &::after {
+                content: '';
+                background-color: color($colors, bondingPrimary);
+                opacity: .1;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+              }
+            }
+
+            .image {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: relative;
+
+              .unreaded-messages-amount {
+                background-color: color($colors, bondingPrimary);
+                height: 20px;
+                width: 20px;
+                border-radius: 50%;
+                font-size: 12px;
+                display: flex;
+                color: #FFFFFF;
+                justify-content: center;
+                align-items: center;
+                font-weight: 500;
+                line-height: 12px;
+                position: absolute;
+                top: -3px;
+                left: -4px;
+              }
+            }
+
+            .detail {
+              padding: 0 20px;
+              max-width: calc(100% - 50px);
+              display: flex;
+              flex-direction: column;
+              flex-grow: 1;
+
+              .info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                .name {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: 100%;
+                  font-size: 18px;
+                  line-height: 18px;
+                  margin: 0 0 5px 0;
+
+                  span {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    margin: 0 10px 0 0;
+                  }                  
+
+                  small {
+                    width: 90px;
+                    text-align: right;
+                    font-size: 12px;
+                    color: #999999;
+                  }
+                }
+
+                ion-chip { 
+                  height: 24px;
+                  line-height: 24px;
+                  margin: 0;
+                  align-self: inherit;
+                }
+              }
+
+              .last-msg {
+                margin: 15px 0 0 0;
+                font-size: 13px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+
+        @media(min-width: 768px) {
+          & { margin: 50px auto; }
+        }
+      }
+
+      h4 {
+        font-weight: 500!important;
+        margin: 0 0 20px 0;
+      }
+
+      & > div {
+        margin: 20px 0 0 0;
+      }
+
+      .empty-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        button {
+          margin: 10px 0 0 0;
+        }
+      }
+    }
+    
+    &.secondary {
+      .tabs {
+        .tab {
+          span {
+            background-color: color($colors, bondingSecondary);
+          }
+
+          &.active {
+            color: color($colors, bondingSecondary);
+  
+            &::after {
+              background-color: color($colors, bondingSecondary);
+            }
+          }
+        }
+      }
+
+      .container {
+        .content-wrapper {
+          .conversations {
+            .conversation {
+              box-shadow: 0px 2px 5px -4px color($colors, bondingSecondary);
+              
+              &.unreaded-messages {
+                &::after {
+                  background-color: color($colors, bondingSecondary);
+                }
+              }
+
+              .image {
+                .unreaded-messages-amount {
+                  background-color: color($colors, bondingSecondary);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+auth-pages {
+  ion-content {
+    @include content-styles(darken(color($colors, light), 10), hidden, auto);
+	}
+	
+  .flex-direction-column {
+    flex-direction: column;
+  }
+	
+	.bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: color($colors, light);
+    border-radius: 6px;
+    @include box_shadow(1);
+    padding: 20px 0;
+    margin: 10% 20px;
+    width: calc( 100% - 40px);
+		height:auto;
+		
+    .welcome {
+      font-size: 3rem;
+      color: color($colors, primary);
+		}
+		
+    .subline {
+      font-size: 2rem;
+      margin: 5px 0;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 80%;
+      .spacey {
+        margin: 15px 0;
+      }
+      .signup {
+        font-size: 1.6rem;
+      }
+      .link {
+        cursor: pointer;
+      }
+      .form-error {
+        color: #fff;
+        background-color: #cc0000;
+        text-align: left;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+      }
+      ion-row {
+        position: relative;
+        
+        &.checkbox {
+          margin: 15px 0 0 0;
+          
+          ion-item {
+            display: flex;
+            align-items: flex-start;
+              
+            ion-checkbox {
+              margin: 5px 10px 5px 5px;
+            }
+  
+            ion-label {
+              white-space: normal;
+              margin-top: 2px;
+            }
+          }
+        }
+				
+				p {
+					&.error {
+						margin: 0;
+						padding: 0;
+						color: #cc0000;
+						font-size: 1.2rem;
+						opacity: 0;
+						-webkit-transition: 150ms ease-in-out;
+						transition: 150ms ease-in-out;
+						text-align: left;
+
+						&.pin-error {
+							bottom: 0;
+						}
+
+						&.show-error {
+							opacity: 1;
+						}
+
+						&.checkbox-error {
+							position: relative;
+							left: 0;
+							bottom: 10px;
+						}
+					}
+
+					&.psw-info {
+						text-align: left;
+						margin: 10px 0 0 0;
+					}
+				}
+      }
+      .tos {
+        text-align: left;
+        cursor: pointer;
+      }
+    }
+    .close{
+      font-size: 3.6rem;
+    }
+  }
+}

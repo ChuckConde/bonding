@@ -1,0 +1,16 @@
+.tab-menu {
+    ion-col {
+      padding: 0;
+      text-transform: capitalize;
+      ion-icon {
+        font-size: 2.5rem;
+      }
+      &.active {
+        ion-icon,
+        p {
+          color: color($colors, primary);
+          font-weight: 400!important;
+        }
+      }
+    }
+  }

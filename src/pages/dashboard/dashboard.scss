@@ -1,0 +1,138 @@
+page-dashboard {
+  ion-content {
+    @include content-styles('', hidden, auto);
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+		width: 100%;
+		padding: 2em 0;
+
+    .body {
+      display: flex;
+      flex-direction: column;
+      margin: -25px 20px 20px;
+      border-radius: 14px;
+      background-color: color($colors, light); //   margin: 20px;
+      width: calc(100% - 40px);
+      height: 100%;
+      position: relative;
+			overflow: hidden;
+			
+      .content {
+        position: relative;
+        margin: 60px 0 10px 0;
+        padding:0 20px;
+        text-align: center;
+        
+        h1 {
+          display: flex;
+          justify-content: center;
+					font-size: 2em;
+					font-weight: 500;
+					margin: 0 0 0.5em 0;
+        }
+
+				.options {
+					max-width: 500px;
+					width: 90%;
+					margin: 50px auto;
+
+					.option {
+						background-color: color($colors, bondingPrimary);
+						color: #ffffff;
+						font-size: 20px;
+						margin: 0 0 15px 0;
+						padding: 15px;
+						cursor: pointer;
+						border-radius: 3px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						ion-icon { font-size: 40px; }
+
+						span {
+							font-weight: 300;
+							display: inline-block;
+							margin: 0 0 0 15px;
+						}
+
+						&:last-child { margin: 0; }
+					}
+
+					&.secondary {
+						.option {
+							background-color: color($colors, bondingSecondary);
+						}
+					}
+        }
+        
+        .actions {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .action {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            padding: 10px;
+            margin: 0 0 10px 0;
+            box-sizing: border-box;
+            ion-icon {
+              font-size: 26px;
+            }
+
+            span {
+              font-size: 16px;
+              margin: 0 0 0 15px;
+            }
+          }
+        }
+      }
+		}
+
+		.greeting-wrapper {
+			margin: 50px auto 0 auto; 
+			background-color: #f15232; 
+			color: #fff; 
+			padding: 20px; 
+			border-radius: 10px;
+			max-width: 520px;
+			
+			.news {
+				.item {
+					background-color: #ffffff;
+					margin: 20px 0 0 0;
+					padding: 5px;
+					border-radius: 5px;
+	
+					a {
+						text-decoration: none;
+	
+						.header {
+							background-position: center;
+							background-size: cover;
+							background-repeat: no-repeat;
+	
+							h5 {
+								margin: 0;
+								text-decoration: none;
+								padding: 100px 0 10px 0;
+								color: #2d2d2d;
+								font-weight: 500!important;
+								background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.8));
+							}
+						}
+	
+						.content {
+							text-align: left;
+							margin: 15px 0;
+						}
+					}
+				}
+			}
+		}
+  }
+}

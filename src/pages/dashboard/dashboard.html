@@ -1,0 +1,54 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Inicio</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div class="container" *ngIf="me">
+		<div class="body">
+			<div class="content">
+				<h1>
+					¡Hola, {{ isAgent? me.firstname + ' ' + me.lastname : me.othernames }}!
+        </h1>
+        
+				<div class="options" [ngClass]="{'secondary': !isAgent}">
+					<div class="option" (click)="navigate('search')">
+						<ion-icon name="ios-search-outline"></ion-icon>
+						<span>
+							{{ isAgent? 'Buscar Empresas' : 'Buscar Agentes' }}
+						</span>
+					</div>
+
+					<div class="option" (click)="navigate('proposals')">
+						<ion-icon name="ios-paper-outline"></ion-icon>
+						<span>Ver Mis Propuestas</span>
+					</div>
+
+					<div class="option" (click)="navigate('links')">
+						<ion-icon name="ios-contacts-outline"></ion-icon>
+						<span>Ver Mis Vinculaciones</span>
+					</div>
+        </div>
+        
+        <div *ngIf="recommendedActions.length" class="actions">
+          <h2>Acciones recomendadas:</h2>
+
+          <ng-container *ngFor="let action of recommendedActions">
+            <ng-container [ngSwitch]="action">
+              <div *ngSwitchCase="'catalog'" 
+                class="action" 
+                (click)="uploadCatalog()">
+						    <ion-icon name="ios-cloud-upload"></ion-icon>
+                <span>Subir catalogo</span>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+			</div>
+		</div>
+	</div>
+</ion-content>

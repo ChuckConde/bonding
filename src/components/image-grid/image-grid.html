@@ -1,0 +1,15 @@
+<div *ngIf="data?.length > 0; then dataTemplate else noDataTemplate"></div>
+
+<ng-template #noDataTemplate>
+  <no-data></no-data>
+</ng-template>
+<ng-template #dataTemplate>
+  <div class="image-grid">
+    <ion-row *ngFor="let i of rows;">
+      <ion-col *ngFor="let item of data | slice:(i*numberPerRow):(i+1)*numberPerRow">
+        <div class="image" [image-loader]="item.images[0]"></div>
+        <div class="name">{{item.name}}</div>
+      </ion-col>
+    </ion-row>
+  </div>
+  </ng-template>

@@ -1,0 +1,135 @@
+<ion-content>
+  <div class="container">
+    <div class="bottom">
+      <div class="welcome">Registro</div>
+      <form class="content custom-form" [formGroup]="form">
+				<p>Registrate para empezar a disfrutar de Bonding.</p>
+
+				<ion-list>
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Nombre</ion-label>
+							<ion-input type="text" formControlName="firstname"></ion-input>
+						</ion-item>
+
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.firstname.touched || signupRequest) && !form.controls.firstname.valid
+							}">
+							Debes completar tu nombre.
+						</p>
+					</ion-row>
+		
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Apellido</ion-label>
+							<ion-input type="text" formControlName="lastname"></ion-input>
+						</ion-item>
+
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.lastname.touched || signupRequest) && !form.controls.lastname.valid
+							}">
+							Debes completar tu apellido.
+						</p>
+					</ion-row>
+	
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Email</ion-label>
+							<ion-input type="email" formControlName="email"></ion-input>
+						</ion-item>
+
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.email.touched || signupRequest) && !form.controls.email.valid
+							}">
+							Debes ingresar una direccion de correo válida.
+						</p>
+					</ion-row>
+		
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Teléfono</ion-label>
+							<ion-input type="number" formControlName="phone"></ion-input>
+						</ion-item>
+
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.phone.touched || signupRequest) && !form.controls.phone.valid
+							}">
+							Debes ingresar un número de telefono válido (sólo números). 
+						</p>
+					</ion-row>
+			
+					<ion-row>
+						<p class="psw-info">
+							Tu contraseña debe ser de mínimo 8 caracteres, incluyendo al menos una letra minúscula, una mayúscula, un caracter especial y un número.
+						</p>
+					</ion-row>
+			
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Contraseña</ion-label>
+							<ion-input type="password" formControlName="password" password></ion-input>
+						</ion-item>
+
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.password.touched || signupRequest) && !form.controls.password.valid
+							}">
+							Debes ingresar una contraseña válida.
+						</p>
+					</ion-row>
+				
+					<ion-row>
+						<ion-item>
+							<ion-label floating>Confirmar Contraseña</ion-label>
+							<ion-input type="password" formControlName="rpassword" password></ion-input>
+						</ion-item>
+						
+						<p class="error" 
+							[ngClass]="{
+								'show-error': (form.controls.rpassword.touched || signupRequest) && !form.controls.rpassword.valid
+							}">
+							Las contraseñas ingresadas deben coincidir.
+						</p>
+					</ion-row>
+				
+					<ion-row class="checkbox">
+						<ion-item>
+							<ion-label>Acepto los terminos y condiciones de uso del servicio.</ion-label>
+							<ion-checkbox checked="false" formControlName="isTosRead"></ion-checkbox>
+						</ion-item>
+
+						<p class="error checkbox-error" 
+							[ngClass]="{
+								'show-error': (form.controls.isTosRead.touched || signupRequest) && !form.controls.isTosRead.valid
+							}">
+							Debes aceptar los términos y condiciones para poder utilizar el servicio.
+						</p>
+          </ion-row>
+          
+          <div class="tos" (click)="showTos()">
+            Para leer los términos y condiciones haz click aquí.
+          </div>
+        </ion-list>
+				
+				<p class="form-error" *ngIf="errorMsg">
+					{{ errorMsg }}
+				</p>
+
+				<button ion-button block 
+					color="primary" 
+					(click)="signup()">
+					Registrarse
+				</button>
+				<button ion-button block 
+					(click)="close()" 
+					class="cancel-button">
+					Cancelar
+				</button>
+      </form>
+    </div>
+  </div>
+</ion-content>

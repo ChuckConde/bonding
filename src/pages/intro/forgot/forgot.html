@@ -1,0 +1,108 @@
+<ion-content>
+  <div class="container">
+    <div class="bottom">
+      <div class="welcome">Recuperar Contraseña</div>
+
+      	<ng-container [ngSwitch]="stage">
+					<ng-container *ngSwitchCase="'reset'">
+						<form class="content custom-form" [formGroup]="resetForm">
+							<p>
+								Verifica tu correo e ingresa aquí el código que te enviamos para recuperar tu contraseña
+							</p>
+
+							<ion-list>
+								<ion-row class="flex-direction-column">
+									<pin-verify (pinChange)="setPin($event)"></pin-verify>
+
+									<p class="error pin-error" 
+										[ngClass]="{
+											'show-error': (resetForm.controls.passcode.touched || verifyPinRequest) && !resetForm.controls.passcode.valid
+										}">
+										Debes ingresar un código de verificación.
+									</p>
+								</ion-row>
+
+								<ion-row>
+									<ion-item>
+										<ion-label floating>Contraseña</ion-label>
+										<ion-input type="password" formControlName="password" password></ion-input>
+									</ion-item>
+
+									<p class="error" 
+										[ngClass]="{
+											'show-error': (resetForm.controls.password.touched || verifyPinRequest) && !resetForm.controls.password.valid
+										}">
+										Debes ingresar una contraseña válida.
+									</p>
+								</ion-row>
+								<ion-row>
+									<ion-item>
+										<ion-label floating>Confirmar Contraseña</ion-label>
+										<ion-input type="password" formControlName="rpassword" password></ion-input>
+									</ion-item>
+
+									<p class="error" 
+										[ngClass]="{
+											'show-error': (resetForm.controls.rpassword.touched || verifyPinRequest) && !resetForm.controls.rpassword.valid
+										}">
+										Las contraseñas ingresadas deben coincidir.
+									</p>
+								</ion-row> 
+							</ion-list>
+
+							<p class="form-error" *ngIf="errorMsg">
+								{{errorMsg}}
+							</p>
+							
+							<button ion-button block 
+								(click)="reset()">
+								RESTABLECER
+							</button>
+
+							<p>
+								<a (click)="login()">Ingresa aquí</a>
+							</p>
+						</form>
+					</ng-container>
+
+					<ng-container *ngSwitchDefault>
+						<form class="content custom-form" [formGroup]="requestForm">
+							<p>
+								Ingresa tu email para recibir un codigo de recuperación
+							</p>
+
+							<ion-list>
+								<ion-row>
+									<ion-item>
+										<ion-label floating>Email</ion-label>
+										<ion-input type="email" formControlName="email"></ion-input>
+									</ion-item>
+
+									<p class="error" 
+										[ngClass]="{
+											'show-error': (requestForm.controls.email.touched || resetRequest) && !requestForm.controls.email.valid
+										}">
+										Debes ingresar un email válido.
+									</p>
+								</ion-row>
+							</ion-list>
+
+							<p class="form-error" *ngIf="errorMsg">
+								{{ errorMsg }}
+							</p>
+
+							<button ion-button block 
+								(click)="request()">
+								Enviar Codigo
+							</button>
+							<button ion-button block 
+								(click)="close()" 
+								class="cancel-button">
+								Cancelar
+							</button>
+						</form>
+					</ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ion-content>

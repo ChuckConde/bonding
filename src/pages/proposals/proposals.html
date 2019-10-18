@@ -1,0 +1,152 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Propuestas</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding [ngClass]="{'secondary': !isAgent}">
+	<div class="tabs">
+		<div class="tab" 
+			[ngClass]="{'active': activeTab === 'ACTIVE'}"
+			(click)="setActiveTab('ACTIVE')">
+      Activas
+      <span *ngIf="unreadedConversations">
+        {{ unreadedConversations < 9 ? unreadedConversations : '9+' }}
+      </span>
+		</div>
+
+		<div class="tab" 
+			[ngClass]="{'active': activeTab === 'FINALIZED'}"
+			(click)="setActiveTab('FINALIZED')">
+			Finalizadas
+		</div>
+	</div>
+
+	<div class="container">
+    <div *ngIf="activeTab === 'ACTIVE'" class="content-wrapper">
+      <h4>Activas</h4>
+      
+      <div *ngIf="!loadingFlag && activeConversations.length" class="conversations">
+        <button *ngIf="isAgent" ion-button (click)="openContacts()">
+          ¡Iniciar nueva propuesta!
+        </button>
+
+        <div *ngFor="let conversation of activeConversations" 
+          class="conversation"
+          (click)="openChat(conversation)"
+          [ngClass]="{'unreaded-messages': conversation.unreadedMessages}">
+          <div class="image" [image-loader]="isAgent? conversation.company.contact.picture : conversation.agent.contact.picture">
+            <span *ngIf="conversation.unreadedMessages" class="unreaded-messages-amount">
+              {{ 
+                conversation.unreadedMessagesAmount < 10?  
+                  conversation.unreadedMessagesAmount :
+                  '9+'
+              }}
+            </span>
+          </div>
+
+          <div class="detail">
+            <div class="info">
+              <h1 class="name">
+                <span>
+                  {{
+                    isAgent?
+                      conversation.company.contact.othernames : 
+                      conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname
+                  }}
+                </span>
+                <small>
+                  {{ conversation.updated_at | timeAgo }}
+                </small>
+              </h1>
+    
+              <ion-chip>
+                <ion-label>
+                  {{ conversation.state | proposalState }}
+                </ion-label>
+              </ion-chip>
+            </div>
+
+            <div *ngIf="conversation.messages && conversation.messages.length" class="last-msg">
+              <strong>
+                {{
+                  conversation.messages[0].createdBy === me.accountId?
+                    'Tu' : 
+                    isAgent ?
+                      conversation.company.contact.othernames :
+                      conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname
+                }}:
+              </strong>
+              <span>{{ conversation.messages[0].text }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!loadingFlag && !activeConversations.length" class="empty-list">
+        <no-data [options]="{text: 'No tienes ninguna propuesta en tránsito.'}">
+        </no-data>
+
+        <button *ngIf="isAgent" ion-button (click)="openContacts()">
+          ¡Iniciar Propuesta!
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'FINALIZED'" class="content-wrapper">
+			<h4>Finalizadas</h4>
+      
+      <div *ngIf="!loadingFlag && deletedConversations.length" class="conversations">
+        <div *ngFor="let conversation of deletedConversations" 
+          class="conversation"
+          (click)="openChat(conversation)">
+          <div class="image" [image-loader]="isAgent? conversation.company.contact.picture : conversation.agent.contact.picture"></div>
+
+          <div class="detail">
+            <div class="info">
+              <h1 class="name">
+                <span>
+                  {{
+                    isAgent?
+                      conversation.company.contact.othernames : 
+                      conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname
+                  }}
+                </span>
+                <small>
+                  {{ conversation.updated_at | timeAgo }}
+                </small>
+              </h1>
+    
+              <ion-chip>
+                <ion-label>
+                  {{ conversation.state | proposalState }}
+                </ion-label>
+              </ion-chip>
+            </div>
+
+            <div *ngIf="conversation.messages && conversation.messages.length" class="last-msg">
+              <strong>
+                {{
+                  conversation.messages[0].createdBy === me.accountId?
+                    'Tu' : 
+                    isAgent ?
+                      conversation.company.contact.othernames :
+                      conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname
+                }}:
+              </strong>
+              <span>{{ conversation.messages[0].text }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!loadingFlag && !deletedConversations.length" class="empty-list">
+        <no-data [options]="{text: 'No tienes ninguna propuesta finalizada.'}">
+        </no-data>
+      </div>
+    </div>
+	</div>
+</ion-content>

@@ -1,0 +1,88 @@
+proposal-details {
+  div {
+    &.content {
+      padding: 0 20px;
+
+      .group {
+        margin: 0 0 30px 0;
+
+        h1 {
+          font-size: 18px;
+          font-weight: 700;
+          margin: 0 0 10px 0;
+          padding: 0 0 5px 0;
+          border-bottom: 1px solid #2f353b;
+        }
+
+        h2 {
+          font-size: 16px;
+          color: color($colors, bondingPrimary);
+          display: flex;
+          flex-direction: column;
+
+          small {
+            font-size: 14px;
+            font-weight: 300;
+            color: #000000;
+          }
+        }
+
+        .text {
+          font-size: 14px;
+          margin: 0 0 7px 0;
+          display: flex;
+          flex-direction: column;
+
+          span {
+            font-weight: 600;
+          }
+        }
+
+        &.state {
+          .text {
+            font-weight: 500;
+          }
+        }
+
+        &.order-data {
+          .product {
+            background-color: #fcdcd6;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 0 0 5px 0;
+
+            .text {
+              flex-direction: row;
+
+              span {
+                margin: 0 5px 0 0;
+              }
+            }
+          }
+        }
+      }
+
+      &.secondary {
+        .group {
+          h2 {
+            color: color($colors, bondingSecondary);
+          }
+
+          &.order-data {
+            .product {
+              background-color: #d2d2da;
+            }
+          }
+        }
+      }
+
+      .action-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 50px 0;
+      }
+    }
+  }
+}

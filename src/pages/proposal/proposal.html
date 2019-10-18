@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      <div *ngIf="!initProposal; then proposalHeaderTemplate else noProposalHeaderTemplate"></div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="!initProposal">
+    <proposal-messages [conversation]="conversation">      
+    </proposal-messages>
+  </ng-container>
+  
+  <ng-container *ngIf="initProposal">
+    <proposal-form (createProposal)="createProposal($event)">
+    </proposal-form>
+  </ng-container>
+</ion-content>
+
+<ng-template #noProposalHeaderTemplate>
+  Iniciar propuesta
+</ng-template>
+
+<ng-template #proposalHeaderTemplate>
+  <div class="proposal-header" (click)="openProposalDetails()">
+    <div class="image" [image-loader]="isAgent? conversation.company.contact.picture : conversation.agent.contact.picture"></div>
+    <div class="detail">
+      <div class="info">
+        <span class="name">
+          {{
+            isAgent?
+              conversation.company.contact.othernames : 
+              conversation.agent.contact.firstname + ' ' + conversation.agent.contact.lastname
+          }}
+        </span>
+        <span class="help-text">
+          Toca para ver más informacion y opciones.
+        </span>
+      </div>
+
+      <ion-icon name="more"></ion-icon>
+    </div>
+  </div>
+</ng-template>

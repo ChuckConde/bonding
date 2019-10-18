@@ -1,0 +1,12 @@
+<div class="image" [image-loader]="images[index]">
+    <div class="left" (click)="scrollLeft(images)">
+      <simple-line-icon name="arrow-left"></simple-line-icon>
+    </div>
+    <div class="right" (click)="scrollRight(images)">
+      <simple-line-icon name="arrow-right"></simple-line-icon>
+    </div>
+  </div>
+  <div class="loader">
+    <div class="loader-item" *ngFor="let loader of images; let i = index" [ngClass]="{'active': i === index}"></div>
+  </div>
+  

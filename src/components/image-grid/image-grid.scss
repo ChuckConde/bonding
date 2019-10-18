@@ -1,0 +1,47 @@
+image-grid {
+    width: 100%;
+  .image-grid {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 5px;
+    ion-row {
+      border-bottom: 1px solid darken(color($colors, light),8);
+      &:last-of-type {
+        border-bottom: none;
+      }
+      ion-col {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px solid darken(color($colors, light),8);
+        &:first-of-type {
+          border-left: none;
+        }
+        .image {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100px;
+          width: 100%;
+          background-position: center;
+          background-size: cover;
+          border-radius: 6px;
+          border: 1px solid darken(color($colors, light),8);
+        }
+        .name {
+          font-size: 1.2rem;
+          margin-top: 8px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 80px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+

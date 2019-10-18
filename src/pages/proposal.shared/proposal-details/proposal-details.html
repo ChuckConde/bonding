@@ -1,0 +1,225 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="close();">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <span>Detalle de la propuesta</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+    
+<ion-content padding>
+  <div class="content" [ngClass]="{'secondary': !isAgent}">
+    <div class="group state">
+      <h1>Estado</h1>
+
+      <h2>
+        {{ conversation.state | proposalState }}
+        <small>Última actualización: {{ conversation.updated_at | timeAgo }}</small>
+      </h2>
+
+      <p class="text">
+        <span>Propuesta iniciada el:</span>
+        {{ conversation.created_at | date: 'dd/MM/yyyy' }}
+      </p>
+
+      <p *ngIf="conversation.state !== 'CREATED'" class="text">
+        <span>Monto de la operación:</span>
+        {{ conversation.totalAmount | currency:'ARS':'symbol-narrow':'1.2' }}
+      </p>
+
+      <p class="text">
+        <span>Comisión acordada:</span>
+        {{ conversation.commision }}%
+      </p>
+
+      <p *ngIf="conversation.state !== 'CREATED'" class="text">
+        <span>Monto de la comisión:</span>
+        {{ conversation.commisionAmount | currency:'ARS':'symbol-narrow':'1.2' }}
+      </p>
+
+      <div *ngIf="conversation.state !== 'CREATED' && conversation.state !== 'PENDING_ACCEPT'">
+        PROPOSAL FILES
+      </div>
+    </div>
+
+    <div *ngIf="conversation.state === 'CREATED' || conversation.state === 'PENDING_ACCEPT'" class="group order-data">
+      <h1>Productos pedidos ({{conversation.orderData.products.length}})</h1>
+
+      <div *ngFor="let product of conversation.orderData.products" class="product">
+        <p class="text"><span>Nombre: </span>{{ product.name }}</p>
+        <p class="text"><span>Cantidad: </span>{{ product.amount }}</p>
+        <p class="text"><span>Observaciones: </span>{{ product.notes || '-' }}</p>
+      </div>
+    </div>
+
+    <div class="group delivery-conditions">
+      <h1>Condiciones de entrega</h1>
+      
+      <p class="text">
+        <span>Dirección:</span>
+        {{ conversation.deliveryConditions.deliveryAdress }}
+        ({{ conversation.deliveryConditions.postalCode }}),
+        {{ conversation.deliveryConditions.city.printable_name }},
+        {{ conversation.deliveryConditions.province.printable_name }}
+      </p>
+
+      <p class="text">
+        <span>Dias de entrega:</span>
+        {{ conversation.deliveryConditions.days.join(', ') }}
+      </p>
+
+      <p class="text">
+        <span>Rango horario:</span>
+        De {{ conversation.deliveryConditions.startTime }} a {{ conversation.deliveryConditions.endTime }}
+      </p>
+
+      <p class="text">
+        <span>Modo de pago:</span>
+        {{ conversation.deliveryConditions.paymentMethod }}
+      </p>
+
+      <p class="text">
+        <span>Comentarios:</span>
+        {{ conversation.deliveryConditions.comments || '-' }}
+      </p>
+    </div>
+
+    <div class="group agent-client">
+      <h1>Cliente</h1>
+      
+      <p class="text">
+        <span>Nombre:</span>
+        {{ conversation.agentClient.contactName }}
+      </p>
+      <p class="text">
+        <span>Rubro:</span>
+        {{ conversation.agentClient.segment }}
+      </p>
+      <p class="text">
+        <span>CUIT:</span>
+        {{ conversation.agentClient.cuit }}
+      </p>
+      <p class="text">
+        <span>Condiciones de facturación:</span>
+        {{ conversation.agentClient.invoiceConditions }}
+      </p>
+      <p class="text">
+        <span>Email:</span>
+        {{ conversation.agentClient.email }}
+      </p>
+      <p class="text">
+        <span>Teléfono:</span>
+        {{ conversation.agentClient.phone }}
+      </p>
+      <p class="text">
+        <span>Dirección:</span>
+        {{ conversation.agentClient.adress }}
+        ({{ conversation.agentClient.postalCode }}),
+        {{ conversation.agentClient.city.printable_name }},
+        {{ conversation.agentClient.province.printable_name }}
+      </p>
+    </div>
+
+    <div class="action-wrapper" 
+      *ngIf="
+        conversation.state === 'CREATED' || 
+        conversation.state === 'ACCEPTED' || 
+        conversation.state === 'PENDING_DELIVERED_APROVAL' ||
+        conversation.state === 'DELIVERED_APROVAL' ||
+        conversation.state === 'PENDING_PAYMENT_APROVAL' ||
+        conversation.state === 'PAYMENT_APROVAL' ||
+        conversation.state === 'PENDING_COMMISSION_PAID'
+    ">
+      <ng-container *ngIf="conversation.state === 'CREATED'">
+        <button ion-button 
+          (click)="cancelProposal()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Cancelar propuesta
+        </button>
+  
+        <button *ngIf="!isAgent"
+          ion-button 
+          (click)="sendInvoice()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Agregar recibo
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'ACCEPTED'">
+          <button ion-button 
+          (click)="cancelProposalByDelivered()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Cancelar por falta de envio
+        </button>
+  
+        <button ion-button 
+          (click)="markAsDelivered()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Marcar como entregado
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'PENDING_DELIVERED_APROVAL' && conversation.updatedBy !== contact.accountId">
+        <button ion-button 
+          (click)="rejectDeliveredMark()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Rechazar confirmación de entrega
+        </button>
+  
+        <button ion-button 
+          (click)="confirmDelivered()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Confirmar propuesta como entregada
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'DELIVERED_APROVAL'">
+        <button ion-button 
+          (click)="markAsPaid()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Marcar como cobrada
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'PENDING_PAYMENT_APROVAL' && conversation.updatedBy !== contact.accountId">
+        <button ion-button 
+          (click)="rejectPaymentMark()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Rechazar confirmación de cobro
+        </button>
+
+        <button ion-button 
+          (click)="confirmPayment()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Confirmar propuesta como cobrada
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'PAYMENT_APROVAL'">
+        <button ion-button 
+          (click)="markCommisionPaid()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Marcar comisión como cobrada
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="conversation.state === 'PENDING_COMMISSION_PAID' && conversation.updatedBy !== contact.accountId">
+        <button ion-button 
+          (click)="rejectCommisionPaid()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Rechazar cobro de comisión
+        </button>
+
+        <button ion-button 
+          (click)="confirmCommisionPaid()"
+          [color]="isAgent? 'bondingPrimary' : 'bondingSecondary'">
+          Confirmar comisión como cobrada
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</ion-content>
